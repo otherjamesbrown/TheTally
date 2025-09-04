@@ -120,36 +120,41 @@ This project is optimized for AI coding assistants:
 - **Automated Reviews**: Google Code Assist integration
 - **Security Scanning**: Automated vulnerability detection
 
-See [AI Rules](ai-rules.md) for development guidelines.
+See [AI Rules](docs/ai-rules.md) for development guidelines.
 
 ## 📋 Project Roadmap
 
-### Phase 0: Foundation & DevOps ✅
+### Phase 0: Foundation & DevOps 🏗️
 - [x] Project setup and architecture
 - [x] Security configuration
-- [x] CI/CD pipeline setup
-- [ ] User authentication implementation
-- [ ] Database setup
+- [ ] [Create service layer architecture](https://github.com/otherjamesbrown/TheTally/issues/1) - Implement services/, models/, and utils/ directories
+- [ ] [Implement user registration and login API](https://github.com/otherjamesbrown/TheTally/issues/2) - JWTs and 2FA support
+- [ ] [Set up PostgreSQL database on GCP](https://github.com/otherjamesbrown/TheTally/issues/4) - Database infrastructure
+- [ ] [Dockerize frontend and backend applications](https://github.com/otherjamesbrown/TheTally/issues/5) - Containerization
+- [ ] [Create GitHub Actions CI/CD pipeline](https://github.com/otherjamesbrown/TheTally/issues/6) - Automated deployment
+- [ ] [Implement E2E tests for login flow](https://github.com/otherjamesbrown/TheTally/issues/7) - Quality assurance
 
-### Phase 1: Core Functionality (MVP)
-- [ ] Financial data import
-- [ ] Transaction categorization
-- [ ] Basic UI components
-- [ ] User management
+### Phase 1: Core Functionality (MVP) 📊
+- [ ] [Create database models for accounts and transactions](https://github.com/otherjamesbrown/TheTally/issues/3) - Data models
+- [ ] [Implement core service layer](https://github.com/otherjamesbrown/TheTally/issues/8) - Business logic services
+- [ ] [Build file import component for CSV, OFX, and QIF files](https://github.com/otherjamesbrown/TheTally/issues/9) - Data import
+- [ ] [Implement backend file parsing logic](https://github.com/otherjamesbrown/TheTally/issues/10) - File processing
+- [ ] [Develop rules-based categorization engine](https://github.com/otherjamesbrown/TheTally/issues/11) - Auto-categorization
+- [ ] [Create UI for managing categorization rules](https://github.com/otherjamesbrown/TheTally/issues/12) - Rule management
+- [ ] [Build transaction table view in the UI](https://github.com/otherjamesbrown/TheTally/issues/13) - Data visualization
 
-### Phase 2: Financial Modelling & Visualization
-- [ ] Investment tracking
-- [ ] Retirement projections
-- [ ] Data visualization
-- [ ] Dashboard creation
+### Phase 2: Financial Modelling & Visualization 📈
+- [ ] [Create database models for investment pots](https://github.com/otherjamesbrown/TheTally/issues/14) - Investment tracking
+- [ ] [Build retirement projection calculator](https://github.com/otherjamesbrown/TheTally/issues/15) - Financial modeling
+- [ ] [Create dashboard with spending visualization](https://github.com/otherjamesbrown/TheTally/issues/16) - Data visualization
 
-### Phase 3: Future Enhancements
+### Phase 3: Future Enhancements 🚀
 - [ ] Open Banking integration
 - [ ] Machine learning categorization
 - [ ] Advanced analytics
 - [ ] Mobile application
 
-See [Project Roadmap](docs/project-roadmap.md) for detailed planning.
+**View all issues:** [GitHub Issues](https://github.com/otherjamesbrown/TheTally/issues) | **Detailed planning:** [Project Roadmap](docs/project-roadmap.md)
 
 ## 🛠️ Development
 
@@ -170,7 +175,7 @@ See [Project Roadmap](docs/project-roadmap.md) for detailed planning.
 4. **Security**: Environment variables for secrets
 5. **Testing**: Comprehensive test coverage
 
-See [AI Rules](ai-rules.md) for detailed guidelines.
+See [AI Rules](docs/ai-rules.md) for detailed guidelines.
 
 ## 📚 Documentation
 
