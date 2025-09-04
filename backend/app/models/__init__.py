@@ -79,9 +79,13 @@ This module is designed to be AI-friendly with:
 
 # Import base model for common functionality
 from .base import BaseModel
+from .user import User
+from .tenant import Tenant
 
 # Re-export commonly used models
 __all__ = [
     "BaseModel",
+    "User",
+    "Tenant",
     # Add other model exports as they are implemented
 ]

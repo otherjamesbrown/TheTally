@@ -87,29 +87,29 @@ Use the **Question** template for:
 ## Milestones
 
 ### Phase 0: Foundation & DevOps
-- [ ] Set up GitHub repository with backend (FastAPI) and frontend (React) folder structure
-- [ ] Create basic "Hello World" endpoints and UI pages
-- [ ] Create service layer architecture
-- [ ] Implement user registration and login API with JWTs and 2FA
-- [ ] Set up PostgreSQL database on GCP
-- [ ] Dockerize the frontend and backend applications
-- [ ] Create a GitHub Actions CI/CD pipeline
-- [ ] Implement E2E tests for the login flow
+- [x] Set up GitHub repository with backend (FastAPI) and frontend (React) folder structure
+- [x] Create basic "Hello World" endpoints and UI pages
+- [ ] [Create service layer architecture](https://github.com/otherjamesbrown/TheTally/issues/1) - Implement services/, models/, and utils/ directories
+- [ ] [Implement user registration and login API](https://github.com/otherjamesbrown/TheTally/issues/2) - JWTs and 2FA support
+- [ ] [Set up PostgreSQL database on GCP](https://github.com/otherjamesbrown/TheTally/issues/4) - Database infrastructure
+- [ ] [Dockerize frontend and backend applications](https://github.com/otherjamesbrown/TheTally/issues/5) - Containerization
+- [ ] [Create GitHub Actions CI/CD pipeline](https://github.com/otherjamesbrown/TheTally/issues/6) - Automated deployment
+- [ ] [Implement E2E tests for login flow](https://github.com/otherjamesbrown/TheTally/issues/7) - Quality assurance
 
 ### Phase 1: Core Functionality (MVP)
-- [ ] Create API endpoints and database models for accounts and transactions
-- [ ] Implement core service layer
-- [ ] Build the file import component in the frontend for CSV, OFX, and QIF files
-- [ ] Implement the backend logic to parse these files and store transactions
-- [ ] Develop the rules-based categorization engine
-- [ ] Create UI for users to manage their categorization rules
-- [ ] Build a simple transaction table view in the UI
+- [ ] [Create database models for accounts and transactions](https://github.com/otherjamesbrown/TheTally/issues/3) - Data models
+- [ ] [Implement core service layer](https://github.com/otherjamesbrown/TheTally/issues/8) - Business logic services
+- [ ] [Build file import component for CSV, OFX, and QIF files](https://github.com/otherjamesbrown/TheTally/issues/9) - Data import
+- [ ] [Implement backend file parsing logic](https://github.com/otherjamesbrown/TheTally/issues/10) - File processing
+- [ ] [Develop rules-based categorization engine](https://github.com/otherjamesbrown/TheTally/issues/11) - Auto-categorization
+- [ ] [Create UI for managing categorization rules](https://github.com/otherjamesbrown/TheTally/issues/12) - Rule management
+- [ ] [Build transaction table view in the UI](https://github.com/otherjamesbrown/TheTally/issues/13) - Data visualization
 
 ### Phase 2: Financial Modelling & Visualization
-- [ ] Create database models for investment pots (Pensions, ISAs)
-- [ ] Build the simple retirement projection calculator
+- [ ] [Create database models for investment pots](https://github.com/otherjamesbrown/TheTally/issues/14) - Investment tracking (Pensions, ISAs)
+- [ ] [Build retirement projection calculator](https://github.com/otherjamesbrown/TheTally/issues/15) - Financial modeling
 - [ ] Use Recharts to display the projection as a line graph
-- [ ] Create a dashboard page to visualize spending by category
+- [ ] [Create dashboard with spending visualization](https://github.com/otherjamesbrown/TheTally/issues/16) - Data visualization
 
 ### Phase 3 & Beyond: Future Enhancements
 - [ ] Implement transaction splitting

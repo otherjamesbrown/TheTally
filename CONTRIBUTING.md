@@ -23,9 +23,10 @@ We are committed to providing a welcoming and inclusive environment for all cont
 ## Development Process
 
 ### 1. Choose an Issue
-- Look for issues labeled `good first issue` for beginners
-- Check the [Project Roadmap](docs/project-roadmap.md) for planned features
-- Comment on the issue to indicate you're working on it
+- **Browse all issues:** [GitHub Issues](https://github.com/otherjamesbrown/TheTally/issues)
+- **View roadmap with issue links:** [Project Roadmap](docs/project-roadmap.md)
+- **Check issue labels:** Look for `good first issue`, `priority:high`, `effort:small` for beginners
+- **Comment on the issue** to indicate you're working on it
 
 ### 2. Development Workflow
 ```bash

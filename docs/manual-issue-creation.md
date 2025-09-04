@@ -41,7 +41,7 @@ Implement services/, models/, and utils/ directories with proper structure for A
 - [ ] **Import Tests**: All modules can be imported without errors
 - [ ] **Linting**: All files pass flake8 and mypy checks
 - [ ] **Documentation**: README.md updated to reflect new structure
-- [ ] **AI Context**: AI-CONTEXT.md updated with new architecture
+- [ ] **AI Context**: docs/ai-context.md updated with new architecture
 
 ## Test Commands
 ```bash

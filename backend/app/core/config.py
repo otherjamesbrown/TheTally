@@ -26,6 +26,20 @@ class Settings(BaseSettings):
     DATABASE_USER: str = "thetally_user"
     DATABASE_PASSWORD: str = "password"
     
+    # GCP Database Configuration
+    GCP_PROJECT_ID: str = ""
+    GCP_REGION: str = "us-central1"
+    GCP_DATABASE_INSTANCE: str = "thetally-postgres"
+    GCP_DATABASE_VERSION: str = "POSTGRES_15"
+    GCP_DATABASE_TIER: str = "db-f1-micro"
+    GCP_DATABASE_SSL_MODE: str = "require"
+    
+    # Database Connection Pool
+    DATABASE_POOL_SIZE: int = 10
+    DATABASE_MAX_OVERFLOW: int = 20
+    DATABASE_POOL_TIMEOUT: int = 30
+    DATABASE_POOL_RECYCLE: int = 3600
+    
     # CORS
     CORS_ORIGINS: List[str] = ["http://localhost:3000", "http://localhost:5173"]
     

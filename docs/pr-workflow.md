@@ -207,7 +207,7 @@ def create_user(user_data: UserCreateSchema, tenant_id: str) -> User:
    - Verify branch protection settings
 
 3. **Review Quality Issues**:
-   - Update `ai-rules.md` with more specific guidelines
+   - Update `docs/ai-rules.md` with more specific guidelines
    - Adjust AI prompt in `ai_reviewer.py`
    - Provide more context in PR descriptions
 
