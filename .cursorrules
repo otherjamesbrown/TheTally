@@ -1,0 +1,12 @@
+# Cursor Rules
+
+Please refer to the `ai-rules.md` file in the root of this repository for detailed AI assistant instructions and coding standards.
+
+The `ai-rules.md` file contains comprehensive guidelines for:
+- Technology stack requirements
+- Code quality and style standards
+- Security best practices
+- Testing requirements
+- Database architecture guidelines
+
+All AI assistants working on this project should follow the rules outlined in that file.

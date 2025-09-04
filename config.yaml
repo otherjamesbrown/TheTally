@@ -1,0 +1,128 @@
+# Google Code Assist (Gemini) Configuration for TheTally
+# This file customizes how Gemini Code Assist reviews your code
+
+code_review:
+  # Minimum severity level for comments (CRITICAL, HIGH, MEDIUM, LOW)
+  comment_severity_threshold: MEDIUM
+  
+  # Maximum number of review comments per PR
+  max_review_comments: 15
+  
+  # Enable automatic code suggestions
+  enable_code_suggestions: true
+  
+  # Focus on security and compliance issues
+  focus_areas:
+    - security
+    - performance
+    - maintainability
+    - testing
+    - documentation
+
+# Files and patterns to ignore during review
+ignore_patterns:
+  - '*.md'
+  - 'docs/**'
+  - '*.log'
+  - 'node_modules/**'
+  - 'venv/**'
+  - '__pycache__/**'
+  - '*.pyc'
+  - '.git/**'
+  - '*.min.js'
+  - '*.min.css'
+  - 'package-lock.json'
+  - 'yarn.lock'
+
+# Project-specific rules and context
+project_context:
+  name: "TheTally"
+  description: "Multi-tenant financial tracking application"
+  tech_stack:
+    - "Python 3.11+ with FastAPI"
+    - "React 18+ with TypeScript"
+    - "PostgreSQL with SQLAlchemy"
+    - "Material-UI with Emotion"
+    - "Docker containerization"
+    - "Google Cloud Platform deployment"
+  
+  # Key architectural principles
+  architecture_principles:
+    - "Multi-tenant architecture with tenant_id isolation"
+    - "Service layer pattern for business logic"
+    - "Security-first approach with JWT + 2FA"
+    - "Structured logging with three types (audit, functional, debug)"
+    - "Comprehensive testing (unit, integration, E2E)"
+    - "Type safety with Python type hints and TypeScript"
+  
+  # Security requirements
+  security_requirements:
+    - "All API endpoints protected by default"
+    - "Input validation and sanitization required"
+    - "SQL injection prevention via ORM"
+    - "Multi-tenant data isolation"
+    - "JWT authentication with refresh tokens"
+    - "2FA implementation using TOTP"
+  
+  # Code quality standards
+  code_quality:
+    - "Follow PEP 8 for Python code"
+    - "Use functional React components with hooks"
+    - "Complete type annotations required"
+    - "Comprehensive error handling"
+    - "Clear, descriptive naming conventions"
+    - "Single responsibility principle"
+    - "Modular, testable code structure"
+
+# Custom review prompts for different file types
+file_type_prompts:
+  python:
+    - "Check for proper type hints and error handling"
+    - "Verify multi-tenant security (tenant_id usage)"
+    - "Ensure service layer separation"
+    - "Validate structured logging implementation"
+    - "Check for SQL injection vulnerabilities"
+  
+  typescript:
+    - "Verify TypeScript type safety"
+    - "Check React hooks usage and component structure"
+    - "Ensure proper error boundaries"
+    - "Validate Material-UI component usage"
+    - "Check for accessibility compliance"
+  
+  yaml:
+    - "Validate YAML syntax and structure"
+    - "Check for security-sensitive configurations"
+    - "Ensure proper environment variable usage"
+
+# Review focus areas for TheTally
+review_focus:
+  security:
+    - "Authentication and authorization"
+    - "Input validation and sanitization"
+    - "SQL injection prevention"
+    - "Multi-tenant data isolation"
+    - "Sensitive data handling"
+    - "NO HARDCODED SECRETS OR API KEYS"
+    - "Environment variable usage for sensitive data"
+    - "Proper secret management practices"
+  
+  architecture:
+    - "Service layer implementation"
+    - "Database model design"
+    - "API endpoint organization"
+    - "Error handling patterns"
+    - "Logging implementation"
+  
+  testing:
+    - "Unit test coverage"
+    - "Integration test implementation"
+    - "Test file organization"
+    - "Mock usage patterns"
+    - "E2E test scenarios"
+  
+  performance:
+    - "Database query optimization"
+    - "Frontend rendering optimization"
+    - "Memory usage patterns"
+    - "API response times"

@@ -1,0 +1,228 @@
+# TheTally Project Configuration
+# This file contains project-wide configuration that can be used across different environments
+
+project:
+  name: "TheTally"
+  version: "1.0.0"
+  description: "Personal financial tracking application"
+
+# Google Cloud Configuration
+gcp:
+  project_id: "jamesbr-thetally"
+  region: "us-central1"
+  zone: "us-central1-a"
+  
+  # Service accounts
+  service_accounts:
+    app: "thetally-app@jamesbr-thetally.iam.gserviceaccount.com"
+    cicd: "thetally-cicd@jamesbr-thetally.iam.gserviceaccount.com"
+    db: "thetally-db@jamesbr-thetally.iam.gserviceaccount.com"
+  
+  # Resources
+  resources:
+    database_instance: "thetally-db"
+    logging_instance: "thetally-logging"
+    storage_bucket: "jamesbr-thetally-uploads"
+    artifact_registry: "thetally-repo"
+
+# Database Configuration
+database:
+  engine: "postgresql"
+  version: "15"
+  host: "localhost"  # Will be overridden by environment
+  port: 5432
+  name: "thetally"
+  user: "thetally_user"
+  password: "secure_password_123"  # Will be overridden by environment
+  
+  # Connection settings
+  pool_size: 10
+  max_overflow: 20
+  pool_timeout: 30
+  pool_recycle: 3600
+
+# Logging Configuration
+logging:
+  # Log levels
+  levels:
+    audit: "AUDIT"
+    functional: "INFO"
+    debug: "DEBUG"
+  
+  # Retention periods (configurable)
+  retention:
+    audit_logs: "7y"
+    functional_logs: "1y"
+    debug_logs: "30d"
+  
+  # Loki configuration
+  loki:
+    url: "http://localhost:3100"  # Will be overridden by environment
+    timeout: 30
+  
+  # Prometheus configuration
+  prometheus:
+    url: "http://localhost:9090"  # Will be overridden by environment
+    timeout: 30
+  
+  # Grafana configuration
+  grafana:
+    url: "http://localhost:3000"  # Will be overridden by environment
+    username: "admin"
+    password: "thetally_admin_123"
+
+# Application Configuration
+application:
+  # API settings
+  api:
+    host: "0.0.0.0"
+    port: 8000
+    workers: 4
+  
+  # Frontend settings
+  frontend:
+    port: 3000
+    build_port: 5173
+  
+  # Security settings
+  security:
+    jwt_secret_length: 32
+    jwt_access_token_expire_minutes: 15
+    jwt_refresh_token_expire_days: 7
+    password_min_length: 8
+    max_login_attempts: 5
+    lockout_duration_minutes: 15
+  
+  # File upload settings
+  file_upload:
+    max_file_size: 10485760  # 10MB
+    allowed_types: ["csv", "ofx", "qif"]
+    upload_path: "/tmp/uploads"
+
+# Infrastructure Configuration
+infrastructure:
+  # Instance types
+  instances:
+    database:
+      machine_type: "e2-medium"
+      disk_size: "20GB"
+      disk_type: "pd-standard"
+    
+    logging:
+      machine_type: "e2-medium"
+      disk_size: "50GB"
+      disk_type: "pd-standard"
+  
+  # Cost estimates (monthly)
+  costs:
+    database_instance: "$25"
+    logging_instance: "$25"
+    cloud_storage: "$5"
+    cloud_run: "$10"
+    total: "$65"
+
+# Development Configuration
+development:
+  # Local development settings
+  local:
+    database_url: "postgresql://thetally_user:password@localhost:5432/thetally_dev"
+    redis_url: "redis://localhost:6379"
+    debug: true
+  
+  # Docker settings
+  docker:
+    compose_file: "docker-compose.yml"
+    network: "thetally-network"
+  
+  # Testing settings
+  testing:
+    test_database: "thetally_test"
+    test_data_path: "tests/fixtures"
+    coverage_threshold: 90
+
+# Deployment Configuration
+deployment:
+  # Environments
+  environments:
+    development:
+      database_url: "postgresql://thetally_user:password@localhost:5432/thetally_dev"
+      logging_url: "http://localhost:3100"
+      prometheus_url: "http://localhost:9090"
+      grafana_url: "http://localhost:3000"
+      debug: true
+    
+    staging:
+      database_url: "postgresql://thetally_user:secure_password_123@STAGING_DB_IP:5432/thetally"
+      logging_url: "http://STAGING_LOGGING_IP:3100"
+      prometheus_url: "http://STAGING_LOGGING_IP:9090"
+      grafana_url: "http://STAGING_LOGGING_IP:3000"
+      debug: false
+    
+    production:
+      database_url: "postgresql://thetally_user:secure_password_123@PROD_DB_IP:5432/thetally"
+      logging_url: "http://PROD_LOGGING_IP:3100"
+      prometheus_url: "http://PROD_LOGGING_IP:9090"
+      grafana_url: "http://PROD_LOGGING_IP:3000"
+      debug: false
+  
+  # CI/CD settings
+  cicd:
+    github_actions: true
+    docker_registry: "gcr.io/jamesbr-thetally"
+    auto_deploy_staging: true
+    manual_deploy_production: true
+
+# Monitoring Configuration
+monitoring:
+  # Health checks
+  health_checks:
+    backend: "/health"
+    frontend: "/health"
+    database: "SELECT 1"
+  
+  # Metrics
+  metrics:
+    enabled: true
+    port: 9090
+    path: "/metrics"
+  
+  # Alerting (future)
+  alerting:
+    enabled: false
+    channels: []
+    rules: []
+
+# Security Configuration
+security:
+  # CORS settings
+  cors:
+    origins: ["http://localhost:3000", "https://thetally.app"]
+    credentials: true
+  
+  # Rate limiting
+  rate_limiting:
+    enabled: true
+    requests_per_minute: 100
+    burst_size: 200
+  
+  # Data encryption
+  encryption:
+    algorithm: "AES-256-GCM"
+    key_rotation_days: 90
+
+# Feature Flags
+features:
+  # Core features
+  two_factor_auth: true
+  file_upload: true
+  api_keys: true
+  
+  # Advanced features
+  machine_learning: false
+  open_banking: false
+  real_time_sync: false
+  
+  # Development features
+  debug_logging: true
+  ai_assistant: true
+  hot_reload: true

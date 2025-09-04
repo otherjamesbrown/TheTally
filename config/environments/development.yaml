@@ -1,0 +1,138 @@
+# Development Environment Configuration
+# This file contains configuration specific to the development environment
+
+environment: "development"
+
+# Database Configuration
+database:
+  host: "localhost"
+  port: 5432
+  name: "thetally_dev"
+  user: "thetally_user"
+  password: "password"
+  url: "postgresql://thetally_user:password@localhost:5432/thetally_dev"
+  
+  # Development-specific settings
+  echo: true  # SQLAlchemy echo
+  pool_size: 5
+  max_overflow: 10
+
+# Logging Configuration
+logging:
+  level: "DEBUG"
+  format: "json"
+  
+  # Local logging services
+  loki:
+    url: "http://localhost:3100"
+    enabled: true
+  
+  prometheus:
+    url: "http://localhost:9090"
+    enabled: true
+  
+  grafana:
+    url: "http://localhost:3000"
+    enabled: true
+
+# Application Configuration
+application:
+  debug: true
+  reload: true
+  
+  # API settings
+  api:
+    host: "0.0.0.0"
+    port: 8000
+    workers: 1  # Single worker for development
+  
+  # Frontend settings
+  frontend:
+    port: 3000
+    hot_reload: true
+  
+  # Security settings (relaxed for development)
+  security:
+    jwt_secret: "dev-secret-key-change-in-production"
+    cors_origins: ["http://localhost:3000", "http://localhost:5173"]
+    rate_limiting: false
+
+# File Upload Configuration
+file_upload:
+  max_size: 10485760  # 10MB
+  allowed_types: ["csv", "ofx", "qif"]
+  upload_path: "./uploads"
+  temp_path: "./temp"
+
+# Redis Configuration (for caching/sessions)
+redis:
+  host: "localhost"
+  port: 6379
+  db: 0
+  password: null
+  url: "redis://localhost:6379/0"
+
+# Docker Configuration
+docker:
+  compose_file: "docker-compose.dev.yml"
+  network: "thetally-dev-network"
+  
+  # Services
+  services:
+    database:
+      image: "postgres:15"
+      port: "5432:5432"
+      environment:
+        POSTGRES_DB: "thetally_dev"
+        POSTGRES_USER: "thetally_user"
+        POSTGRES_PASSWORD: "password"
+    
+    redis:
+      image: "redis:7-alpine"
+      port: "6379:6379"
+    
+    logging:
+      enabled: false  # Use local services instead
+
+# Testing Configuration
+testing:
+  database_url: "postgresql://thetally_user:password@localhost:5432/thetally_test"
+  test_data_path: "tests/fixtures"
+  coverage_threshold: 80  # Lower for development
+  
+  # Test services
+  services:
+    database: "postgres:15"
+    redis: "redis:7-alpine"
+
+# Development Tools
+tools:
+  # Code quality
+  linting: true
+  formatting: true
+  type_checking: true
+  
+  # Testing
+  unit_tests: true
+  integration_tests: true
+  e2e_tests: false  # Disabled for local development
+  
+  # Debugging
+  debugger: true
+  profiling: false
+  memory_analysis: false
+
+# Feature Flags (Development)
+features:
+  # Enable all features for development
+  two_factor_auth: true
+  file_upload: true
+  api_keys: true
+  debug_logging: true
+  ai_assistant: true
+  hot_reload: true
+  
+  # Development-specific features
+  mock_external_apis: true
+  fake_data_generation: true
+  debug_endpoints: true

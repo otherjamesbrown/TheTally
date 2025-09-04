@@ -1,0 +1,25 @@
+# Global code owners for TheTally
+# All changes require review from these users
+
+* @otherjamesbrown
+
+# Critical security and configuration files
+/.github/ @otherjamesbrown
+/ai-rules.md @otherjamesbrown
+/config/ @otherjamesbrown
+/docker-compose*.yml @otherjamesbrown
+
+# Backend security and core functionality
+/backend/app/core/ @otherjamesbrown
+/backend/app/api/ @otherjamesbrown
+/backend/app/services/ @otherjamesbrown
+/backend/requirements.txt @otherjamesbrown
+
+# Frontend security and core components
+/frontend/src/ @otherjamesbrown
+/frontend/package.json @otherjamesbrown
+/frontend/package-lock.json @otherjamesbrown
+
+# Database and infrastructure
+/backend/app/db/ @otherjamesbrown
+/backend/app/models/ @otherjamesbrown

@@ -1,0 +1,211 @@
+# Production Environment Configuration
+# This file contains configuration specific to the production environment
+
+environment: "production"
+
+# Database Configuration
+database:
+  host: "${DB_HOST}"  # Will be set by environment variables
+  port: 5432
+  name: "thetally"
+  user: "thetally_user"
+  password: "${DB_PASSWORD}"  # From Secret Manager
+  url: "${DATABASE_URL}"  # Full connection string
+  
+  # Production settings
+  echo: false
+  pool_size: 20
+  max_overflow: 30
+  pool_timeout: 30
+  pool_recycle: 3600
+
+# Logging Configuration
+logging:
+  level: "INFO"
+  format: "json"
+  
+  # Production logging services
+  loki:
+    url: "${LOKI_URL}"  # Will be set by environment variables
+    enabled: true
+  
+  prometheus:
+    url: "${PROMETHEUS_URL}"
+    enabled: true
+  
+  grafana:
+    url: "${GRAFANA_URL}"
+    enabled: true
+
+# Application Configuration
+application:
+  debug: false
+  reload: false
+  
+  # API settings
+  api:
+    host: "0.0.0.0"
+    port: 8000
+    workers: 4  # Multiple workers for production
+  
+  # Frontend settings
+  frontend:
+    port: 80  # Nginx will serve on port 80
+    hot_reload: false
+  
+  # Security settings (strict for production)
+  security:
+    jwt_secret: "${JWT_SECRET}"  # From Secret Manager
+    cors_origins: ["https://thetally.app", "https://staging.thetally.app"]
+    rate_limiting: true
+    rate_limit_requests: 100
+    rate_limit_window: 60
+
+# File Upload Configuration
+file_upload:
+  max_size: 10485760  # 10MB
+  allowed_types: ["csv", "ofx", "qif"]
+  upload_path: "/app/uploads"
+  temp_path: "/tmp"
+  storage_bucket: "${STORAGE_BUCKET}"  # Cloud Storage bucket
+
+# Redis Configuration (for caching/sessions)
+redis:
+  host: "${REDIS_HOST}"
+  port: 6379
+  db: 0
+  password: "${REDIS_PASSWORD}"
+  url: "${REDIS_URL}"
+
+# Docker Configuration
+docker:
+  compose_file: "docker-compose.prod.yml"
+  network: "thetally-prod-network"
+  
+  # Services
+  services:
+    database:
+      external: true  # Use external database
+    redis:
+      external: true  # Use external Redis
+    logging:
+      external: true  # Use external logging services
+
+# Monitoring Configuration
+monitoring:
+  # Health checks
+  health_checks:
+    backend: "/health"
+    frontend: "/health"
+    database: "SELECT 1"
+  
+  # Metrics
+  metrics:
+    enabled: true
+    port: 9090
+    path: "/metrics"
+  
+  # Alerting
+  alerting:
+    enabled: true
+    channels: ["email", "slack"]
+    rules:
+      - name: "high_error_rate"
+        condition: "error_rate > 0.05"
+        duration: "5m"
+      - name: "high_response_time"
+        condition: "response_time_p95 > 2s"
+        duration: "5m"
+
+# Security Configuration
+security:
+  # CORS settings
+  cors:
+    origins: ["https://thetally.app"]
+    credentials: true
+  
+  # Rate limiting
+  rate_limiting:
+    enabled: true
+    requests_per_minute: 100
+    burst_size: 200
+  
+  # Data encryption
+  encryption:
+    algorithm: "AES-256-GCM"
+    key_rotation_days: 90
+  
+  # SSL/TLS
+  ssl:
+    enabled: true
+    redirect_http: true
+    hsts: true
+
+# Performance Configuration
+performance:
+  # Caching
+  caching:
+    enabled: true
+    ttl: 3600  # 1 hour
+  
+  # Database optimization
+  database:
+    connection_pooling: true
+    query_timeout: 30
+    max_connections: 50
+  
+  # File serving
+  static_files:
+    cache_control: "public, max-age=31536000"  # 1 year
+    compression: true
+
+# Feature Flags (Production)
+features:
+  # Core features
+  two_factor_auth: true
+  file_upload: true
+  api_keys: true
+  
+  # Advanced features (disabled initially)
+  machine_learning: false
+  open_banking: false
+  real_time_sync: false
+  
+  # Development features (disabled in production)
+  debug_logging: false
+  ai_assistant: true  # Keep for AI debugging
+  hot_reload: false
+  mock_external_apis: false
+  fake_data_generation: false
+  debug_endpoints: false
+
+# Backup Configuration
+backup:
+  # Database backups
+  database:
+    enabled: true
+    schedule: "0 2 * * *"  # Daily at 2 AM
+    retention_days: 30
+    storage_location: "gs://jamesbr-thetally-backups"
+  
+  # Log backups
+  logs:
+    enabled: true
+    schedule: "0 3 * * *"  # Daily at 3 AM
+    retention_days: 90
+    storage_location: "gs://jamesbr-thetally-logs"
+
+# Scaling Configuration
+scaling:
+  # Auto-scaling settings
+  auto_scaling:
+    enabled: true
+    min_instances: 1
+    max_instances: 10
+    target_cpu_utilization: 70
+  
+  # Load balancing
+  load_balancer:
+    enabled: true
+    health_check_path: "/health"
+    timeout: 30

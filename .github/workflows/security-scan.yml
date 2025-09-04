@@ -1,0 +1,132 @@
+name: Security Scan
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    # Run security scan daily at 2 AM UTC
+    - cron: '0 2 * * *'
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      contents: read
+      actions: read
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+      
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: 'trivy-results.sarif'
+      
+      - name: Check for secrets in code
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: ./
+          base: main
+          head: HEAD
+          extra_args: --debug --only-verified
+      
+      - name: Run Bandit security linter for Python
+        uses: gaurav-nelson/bandit-action@v1.0.0
+        with:
+          path: backend/
+          level: medium
+          confidence: medium
+      
+      - name: Check for hardcoded secrets
+        run: |
+          echo "🔍 Checking for potential secrets in code..."
+          
+          # Check for common secret patterns
+          if grep -r -i "password\s*=" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=venv; then
+            echo "❌ Found potential hardcoded passwords"
+            exit 1
+          fi
+          
+          if grep -r -i "api_key\s*=" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=venv; then
+            echo "❌ Found potential hardcoded API keys"
+            exit 1
+          fi
+          
+          if grep -r -i "secret\s*=" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=venv; then
+            echo "❌ Found potential hardcoded secrets"
+            exit 1
+          fi
+          
+          if grep -r -E "sk-[a-zA-Z0-9]{20,}" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=venv; then
+            echo "❌ Found potential OpenAI API keys"
+            exit 1
+          fi
+          
+          if grep -r -E "AIza[0-9A-Za-z\\-_]{35}" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=venv; then
+            echo "❌ Found potential Google API keys"
+            exit 1
+          fi
+          
+          if grep -r -E "AKIA[0-9A-Z]{16}" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=venv; then
+            echo "❌ Found potential AWS access keys"
+            exit 1
+          fi
+          
+          echo "✅ No obvious secrets found in code"
+      
+      - name: Validate .env.example exists
+        run: |
+          if [ ! -f ".env.example" ]; then
+            echo "❌ .env.example file not found"
+            exit 1
+          fi
+          echo "✅ .env.example file exists"
+      
+      - name: Check .gitignore for secrets patterns
+        run: |
+          echo "🔍 Checking .gitignore for secrets protection..."
+          
+          required_patterns=(
+            ".env*"
+            "*.key"
+            "*.pem"
+            "secrets.json"
+            "credentials.json"
+            "service-account.json"
+          )
+          
+          for pattern in "${required_patterns[@]}"; do
+            if ! grep -q "$pattern" .gitignore; then
+              echo "❌ Missing pattern in .gitignore: $pattern"
+              exit 1
+            fi
+          done
+          
+          echo "✅ .gitignore has required secrets patterns"
+      
+      - name: Security scan summary
+        if: always()
+        run: |
+          echo "## 🔒 Security Scan Summary"
+          echo "✅ Trivy vulnerability scan completed"
+          echo "✅ TruffleHog secrets scan completed"
+          echo "✅ Bandit Python security scan completed"
+          echo "✅ Hardcoded secrets check completed"
+          echo "✅ .gitignore validation completed"
+          echo ""
+          echo "Check the Security tab for detailed results."
