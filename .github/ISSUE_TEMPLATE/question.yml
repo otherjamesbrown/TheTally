@@ -1,0 +1,87 @@
+name: ❓ Question
+description: Ask a question about TheTally
+title: "[Question]: "
+labels: ["question", "needs-triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Have a question about TheTally? We're here to help! Please provide as much context as possible.
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: What would you like to know?
+      placeholder: What's your question?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      description: What category does your question fall under?
+      options:
+        - Setup & Installation
+        - Usage & Features
+        - Development
+        - API
+        - Database
+        - Security
+        - Performance
+        - Troubleshooting
+        - Contributing
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Provide context about your question. What are you trying to achieve?
+      placeholder: |
+        I'm trying to...
+        I want to understand...
+        I'm having trouble with...
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-tried
+    attributes:
+      label: What Have You Tried?
+      description: What have you already tried or researched?
+      placeholder: |
+        - I've looked at the documentation
+        - I've tried X approach
+        - I've searched for similar issues
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: What environment are you working in?
+      placeholder: |
+        - OS: macOS/Windows/Linux
+        - Python version: 3.11+
+        - Node version: 18+
+        - Browser: Chrome/Firefox/Safari
+        - Development/Production
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: If applicable, add screenshots to help explain your question.
+      placeholder: Drag and drop images here...
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Add any other context or information about your question.
+      placeholder: Any additional information that might be helpful...

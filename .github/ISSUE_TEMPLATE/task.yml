@@ -1,0 +1,106 @@
+name: 📋 Task
+description: A specific task or work item to be completed
+title: "[Task]: "
+labels: ["task", "needs-triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template for specific tasks, improvements, or work items that need to be completed.
+
+  - type: textarea
+    id: task-description
+    attributes:
+      label: Task Description
+      description: A clear and concise description of the task.
+      placeholder: What needs to be done?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: task-type
+    attributes:
+      label: Task Type
+      description: What type of task is this?
+      options:
+        - Code Implementation
+        - Documentation
+        - Testing
+        - Refactoring
+        - Bug Fix
+        - Performance Improvement
+        - Security Enhancement
+        - Infrastructure
+        - Research
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How urgent is this task?
+      options:
+        - Low
+        - Medium
+        - High
+        - Critical
+    validations:
+      required: true
+
+  - type: dropdown
+    id: effort
+    attributes:
+      label: Estimated Effort
+      description: How much work is this likely to be?
+      options:
+        - Small (1-2 hours)
+        - Medium (half day)
+        - Large (1-2 days)
+        - Extra Large (1+ weeks)
+        - Unknown
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      description: What needs to be completed for this task to be done?
+      placeholder: |
+        - [ ] Criterion 1
+        - [ ] Criterion 2
+        - [ ] Criterion 3
+    validations:
+      required: true
+
+  - type: textarea
+    id: technical-details
+    attributes:
+      label: Technical Details
+      description: Any technical requirements, constraints, or implementation notes.
+      placeholder: |
+        - Files to modify
+        - Dependencies
+        - Testing requirements
+        - Performance considerations
+
+  - type: textarea
+    id: related-issues
+    attributes:
+      label: Related Issues
+      description: Link to any related issues, PRs, or discussions.
+      placeholder: |
+        - Closes #123
+        - Related to #456
+        - Depends on #789
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Any other context or information about the task.
+      placeholder: Additional information that might be helpful...

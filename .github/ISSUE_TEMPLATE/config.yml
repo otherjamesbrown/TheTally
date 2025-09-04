@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Discussion Forum
+    url: https://github.com/otherjamesbrown/TheTally/discussions
+    about: Ask questions and discuss ideas with the community
+  - name: 📚 Documentation
+    url: https://github.com/otherjamesbrown/TheTally/tree/main/docs
+    about: Check our comprehensive documentation
+  - name: 🔒 Security Issue
+    url: https://github.com/otherjamesbrown/TheTally/security/advisories/new
+    about: Report security vulnerabilities privately
