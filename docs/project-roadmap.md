@@ -4,7 +4,7 @@
 
 - [x] Set up GitHub repository with backend (FastAPI) and frontend (React) folder structure.
 - [x] Create basic "Hello World" endpoints and UI pages.
-- [ ] [**Implement user registration and login API**](https://github.com/otherjamesbrown/TheTally/issues/2) - JWTs and 2FA support.
+- [x] [**Implement user registration and login API**](https://github.com/otherjamesbrown/TheTally/issues/2) - JWTs and 2FA support.
 - [ ] [**Dockerize frontend and backend applications**](https://github.com/otherjamesbrown/TheTally/issues/5) - Containerization.
 - [ ] [**Create GitHub Actions CI/CD pipeline**](https://github.com/otherjamesbrown/TheTally/issues/6) that:
   - Runs unit and integration tests on every PR.
