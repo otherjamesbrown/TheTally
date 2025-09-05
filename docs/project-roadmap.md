@@ -4,9 +4,7 @@
 
 - [x] Set up GitHub repository with backend (FastAPI) and frontend (React) folder structure.
 - [x] Create basic "Hello World" endpoints and UI pages.
-- [ ] [**Create service layer architecture**](https://github.com/otherjamesbrown/TheTally/issues/1) - Implement services/, models/, and utils/ directories with proper structure for AI-friendly development.
 - [ ] [**Implement user registration and login API**](https://github.com/otherjamesbrown/TheTally/issues/2) - JWTs and 2FA support.
-- [ ] [**Set up PostgreSQL database on GCP**](https://github.com/otherjamesbrown/TheTally/issues/4) - Database infrastructure.
 - [ ] [**Dockerize frontend and backend applications**](https://github.com/otherjamesbrown/TheTally/issues/5) - Containerization.
 - [ ] [**Create GitHub Actions CI/CD pipeline**](https://github.com/otherjamesbrown/TheTally/issues/6) that:
   - Runs unit and integration tests on every PR.

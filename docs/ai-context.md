@@ -150,7 +150,6 @@ TheTally/
 - [x] Project setup and architecture
 - [x] Security configuration
 - [ ] [User authentication implementation](https://github.com/otherjamesbrown/TheTally/issues/2) - JWTs and 2FA
-- [ ] [Database setup and models](https://github.com/otherjamesbrown/TheTally/issues/4) - PostgreSQL on GCP
 
 ### Phase 1: Core Functionality (MVP)
 - [ ] [Financial data import](https://github.com/otherjamesbrown/TheTally/issues/9) - CSV, OFX, QIF support

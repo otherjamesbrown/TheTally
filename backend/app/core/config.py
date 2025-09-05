@@ -44,6 +44,7 @@ class Settings(BaseSettings):
     CORS_ORIGINS: List[str] = ["http://localhost:3000", "http://localhost:5173"]
     
     # Security
+    SECRET_KEY: str = "dev-secret-key-change-in-production"
     JWT_SECRET: str = "dev-secret-key-change-in-production"
     JWT_ALGORITHM: str = "HS256"
     JWT_ACCESS_TOKEN_EXPIRE_MINUTES: int = 15
@@ -52,6 +53,9 @@ class Settings(BaseSettings):
     # 2FA
     OTP_ISSUER: str = "TheTally"
     OTP_SECRET_LENGTH: int = 32
+    
+    # Project
+    PROJECT_NAME: str = "TheTally"
     
     # File Upload
     MAX_FILE_SIZE: int = 10485760  # 10MB

@@ -89,9 +89,7 @@ Use the **Question** template for:
 ### Phase 0: Foundation & DevOps
 - [x] Set up GitHub repository with backend (FastAPI) and frontend (React) folder structure
 - [x] Create basic "Hello World" endpoints and UI pages
-- [ ] [Create service layer architecture](https://github.com/otherjamesbrown/TheTally/issues/1) - Implement services/, models/, and utils/ directories
 - [ ] [Implement user registration and login API](https://github.com/otherjamesbrown/TheTally/issues/2) - JWTs and 2FA support
-- [ ] [Set up PostgreSQL database on GCP](https://github.com/otherjamesbrown/TheTally/issues/4) - Database infrastructure
 - [ ] [Dockerize frontend and backend applications](https://github.com/otherjamesbrown/TheTally/issues/5) - Containerization
 - [ ] [Create GitHub Actions CI/CD pipeline](https://github.com/otherjamesbrown/TheTally/issues/6) - Automated deployment
 - [ ] [Implement E2E tests for login flow](https://github.com/otherjamesbrown/TheTally/issues/7) - Quality assurance
@@ -146,11 +144,13 @@ Manage bug reports with columns:
 ## Workflow
 
 ### 1. Creating Issues
-1. Choose the appropriate template
-2. Fill out all required fields
-3. Add relevant labels
-4. Assign to appropriate milestone
-5. Set priority and effort estimates
+1. Go to https://github.com/otherjamesbrown/TheTally/issues
+2. Click "New issue"
+3. Choose the appropriate template (Bug Report, Feature Request, Task, or Question)
+4. Fill out all required fields
+5. Add relevant labels and assign to appropriate milestone
+6. Set priority and effort estimates
+7. Submit the issue
 
 ### 2. Triage Process
 1. **New issues** are labeled `needs-triage`
@@ -205,6 +205,24 @@ Manage bug reports with columns:
 - Label changes trigger notifications
 - Milestone updates send alerts
 - Project board moves create activity
+
+## Current Issues
+
+### View All Issues
+- **GitHub Issues**: [View all open issues](https://github.com/otherjamesbrown/TheTally/issues)
+- **Project Board**: [Sprint Board](https://github.com/otherjamesbrown/TheTally/projects)
+
+### Next Issue to Work On
+Based on priority and phase progression, the next issue to work on is:
+- **[Issue #2: Implement user registration and login API with JWTs and 2FA](https://github.com/otherjamesbrown/TheTally/issues/2)** - Critical priority, Phase 0 foundation requirement
+
+### Creating New Issues
+1. Go to: https://github.com/otherjamesbrown/TheTally/issues
+2. Click "New issue"
+3. Choose appropriate template (Bug Report, Feature Request, Task, or Question)
+4. Fill out all required fields
+5. Add relevant labels and assign to milestone
+6. Submit the issue
 
 ## Getting Help
 

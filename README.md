@@ -127,9 +127,7 @@ See [AI Rules](docs/ai-rules.md) for development guidelines.
 ### Phase 0: Foundation & DevOps 🏗️
 - [x] Project setup and architecture
 - [x] Security configuration
-- [ ] [Create service layer architecture](https://github.com/otherjamesbrown/TheTally/issues/1) - Implement services/, models/, and utils/ directories
 - [ ] [Implement user registration and login API](https://github.com/otherjamesbrown/TheTally/issues/2) - JWTs and 2FA support
-- [ ] [Set up PostgreSQL database on GCP](https://github.com/otherjamesbrown/TheTally/issues/4) - Database infrastructure
 - [ ] [Dockerize frontend and backend applications](https://github.com/otherjamesbrown/TheTally/issues/5) - Containerization
 - [ ] [Create GitHub Actions CI/CD pipeline](https://github.com/otherjamesbrown/TheTally/issues/6) - Automated deployment
 - [ ] [Implement E2E tests for login flow](https://github.com/otherjamesbrown/TheTally/issues/7) - Quality assurance

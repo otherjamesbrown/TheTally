@@ -6,7 +6,7 @@ FastAPI application with health check endpoint
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
-from app.api.routers import health
+from app.api.routers import health, auth
 
 # Create FastAPI application
 app = FastAPI(
@@ -28,6 +28,7 @@ app.add_middleware(
 
 # Include routers
 app.include_router(health.router, prefix="/api/v1", tags=["health"])
+app.include_router(auth.router, prefix="/api/v1", tags=["authentication"])
 
 @app.get("/")
 async def root():
