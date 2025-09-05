@@ -11,7 +11,7 @@
   - Builds Docker images.
   - Deploys to a GCP staging environment automatically.
   - Requires manual approval for production deployment.
-- [ ] [**Implement E2E tests for the login flow**](https://github.com/otherjamesbrown/TheTally/issues/7) - Quality assurance.
+- [x] [**Implement E2E tests for the login flow**](https://github.com/otherjamesbrown/TheTally/issues/7) - Quality assurance.
 
 ## Phase 1: Core Functionality (MVP) 📊
 

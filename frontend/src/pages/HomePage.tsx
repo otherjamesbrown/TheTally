@@ -58,13 +58,31 @@ const HomePage: React.FC = () => {
         <Button
           variant="contained"
           size="large"
+          onClick={() => navigate('/login')}
+          sx={{ mr: 2 }}
+          data-testid="login-button"
+        >
+          Login
+        </Button>
+        <Button
+          variant="outlined"
+          size="large"
+          onClick={() => navigate('/register')}
+          sx={{ mr: 2 }}
+          data-testid="register-button"
+        >
+          Sign Up
+        </Button>
+        <Button
+          variant="text"
+          size="large"
           onClick={() => navigate('/health')}
           sx={{ mr: 2 }}
         >
           Check System Health
         </Button>
         <Button
-          variant="outlined"
+          variant="text"
           size="large"
           onClick={() => window.open('/docs', '_blank')}
         >
