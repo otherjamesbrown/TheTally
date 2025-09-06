@@ -68,6 +68,8 @@ jobs:
           fail-on-findings: true
           no-git: false
           verbose: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Validate .env.example exists
         run: |
