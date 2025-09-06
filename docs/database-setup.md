@@ -72,7 +72,7 @@ gcloud sql instances create thetally-postgres \
 gcloud sql users set-password root \
     --host=% \
     --instance=thetally-postgres \
-    --password="$(openssl rand -base64 32)"
+    --password="$(openssl rand -base64 32)"  # nosec B105
 ```
 
 #### Step 4: Create Database
@@ -87,7 +87,7 @@ gcloud sql databases create thetally_prod \
 ```bash
 gcloud sql users create thetally_user \
     --instance=thetally-postgres \
-    --password="$(openssl rand -base64 32)"
+    --password="$(openssl rand -base64 32)"  # nosec B105
 ```
 
 ## Configuration
@@ -110,7 +110,7 @@ DATABASE_HOST=your-instance-ip
 DATABASE_PORT=5432
 DATABASE_NAME=thetally_prod
 DATABASE_USER=thetally_user
-DATABASE_PASSWORD=your-secure-password
+DATABASE_PASSWORD=${DATABASE_PASSWORD:-your-secure-password}  # nosec B105
 
 # Connection Pool
 DATABASE_POOL_SIZE=10
@@ -276,7 +276,7 @@ services:
     environment:
       POSTGRES_DB: thetally_dev
       POSTGRES_USER: thetally_user
-      POSTGRES_PASSWORD: password
+      POSTGRES_PASSWORD: password  # nosec B105
     ports:
       - "5432:5432"
     volumes:

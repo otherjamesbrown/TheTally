@@ -1,0 +1,56 @@
+name: Hotfix Request
+description: Request an urgent fix for a critical issue
+title: "[HOTFIX] "
+labels: ["bug", "hotfix", "urgent"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Hotfix Request
+        This is for urgent fixes that need to be deployed immediately.
+  - type: textarea
+    id: issue-description
+    attributes:
+      label: Issue Description
+      description: Describe the critical issue
+      placeholder: What is the problem that needs immediate fixing?
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impact
+      description: What is the impact of this issue?
+      placeholder: Describe the impact on users or system
+    validations:
+      required: true
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: Steps to Reproduce
+      description: How can this issue be reproduced?
+      placeholder: |
+        1. Step 1
+        2. Step 2
+        3. Step 3
+    validations:
+      required: true
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      description: How severe is this issue?
+      options:
+        - Critical - System down
+        - High - Major functionality broken
+        - Medium - Minor functionality affected
+    validations:
+      required: true
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: Proposed Solution
+      description: How do you propose to fix this?
+      placeholder: Describe your proposed solution
+    validations:
+      required: true

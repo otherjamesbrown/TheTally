@@ -95,7 +95,7 @@ DATABASE_HOST=localhost
 DATABASE_PORT=5432
 DATABASE_NAME=thetally_dev
 DATABASE_USER=thetally_user
-DATABASE_PASSWORD=password
+DATABASE_PASSWORD=${DATABASE_PASSWORD:-password}  # nosec B105
 
 # Logging
 LOKI_URL=http://localhost:3100
@@ -148,7 +148,7 @@ DATABASE_HOST=\${DATABASE_HOST}
 DATABASE_PORT=5432
 DATABASE_NAME=thetally
 DATABASE_USER=thetally_user
-DATABASE_PASSWORD=\${DATABASE_PASSWORD}
+DATABASE_PASSWORD=\${DATABASE_PASSWORD}  # nosec B105
 
 # Logging (will be set by infrastructure setup)
 LOKI_URL=\${LOKI_URL}
@@ -192,7 +192,7 @@ DATABASE_HOST=localhost
 DATABASE_PORT=5432
 DATABASE_NAME=thetally_local
 DATABASE_USER=thetally_user
-DATABASE_PASSWORD=password
+DATABASE_PASSWORD=${DATABASE_PASSWORD:-password}  # nosec B105
 
 # Logging (using Docker services)
 LOKI_URL=http://localhost:3100

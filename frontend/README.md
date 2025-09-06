@@ -1,11 +1,58 @@
-# React + TypeScript + Vite
+# TheTally Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+TheTally frontend is built with React, TypeScript, and Vite, providing a modern, fast development experience with Material-UI components.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- ⚡️ **Vite** - Lightning fast build tool
+- ⚛️ **React 18** - Modern React with hooks and concurrent features
+- 🔷 **TypeScript** - Type-safe development
+- 🎨 **Material-UI (MUI)** - Beautiful, accessible components
+- 📱 **Responsive Design** - Mobile-first approach
+- 🔒 **Security** - Integrated with backend security scanning
+
+## Development
+
+### Prerequisites
+- Node.js 18+
+- npm or yarn
+
+### Getting Started
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+```
+
+### Project Structure
+```
+frontend/
+├── src/
+│   ├── components/     # Reusable UI components
+│   ├── pages/         # Page components
+│   ├── hooks/         # Custom React hooks
+│   ├── services/      # API services
+│   ├── types/         # TypeScript type definitions
+│   └── utils/         # Utility functions
+├── public/            # Static assets
+└── dist/              # Build output
+```
+
+### Security Integration
+This frontend is part of TheTally's security-first development approach:
+- **Development**: Light security scanning on feature branches
+- **Staging**: Medium security scanning on develop branch  
+- **Production**: Rigorous security scanning on main branch
+
+See [Branching Strategy](../../docs/branching-strategy.md) for details.
 
 ## Expanding the ESLint configuration
 

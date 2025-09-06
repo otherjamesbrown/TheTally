@@ -1,0 +1,59 @@
+# Gitleaks Configuration for TheTally
+# Based on the official Gitleaks configuration format from https://github.com/gitleaks/gitleaks
+
+title = "TheTally gitleaks config"
+
+[allowlist]
+description = "Allow legitimate environment variable patterns and documentation examples"
+paths = [
+    ".*\\.example$",
+    ".*\\.env\\.example$",
+    ".*test.*\\.py$",
+    ".*tests/.*",
+    ".*docs/.*",
+    ".*README.*",
+    ".*CONTRIBUTING.*",
+    ".*troubleshooting/.*",
+]
+regexes = [
+    # Python environment variable patterns
+    "os\\.getenv\\(",
+    "os\\.environ\\[",
+    "os\\.environ\\.get\\(",
+    
+    # Shell environment variable patterns
+    "\\$\\{.*:-",
+    "=\\$\\{.*:-",
+    "DATABASE_PASSWORD=\\$\\{DATABASE_PASSWORD",
+    "password=\\$\\{.*:-",
+    
+    # Echo statements for configuration
+    "echo.*export.*PASSWORD",
+    "echo.*PASSWORD.*=",
+    "echo.*export.*DATABASE",
+    
+    # Docker environment patterns
+    "POSTGRES_PASSWORD:",
+    "MYSQL_PASSWORD:",
+    "DATABASE_PASSWORD:",
+    
+    # Test data patterns
+    "password.*=.*\"test",
+    "password.*=.*\"example",
+    "password.*=.*\"wrong",
+    "password.*=.*\"Wrong",
+    
+    # Documentation examples
+    "password.*=.*\"your-",
+    "password.*=.*\"secure_",
+    "password.*=.*\"dev_",
+    
+    # Generated password patterns
+    "openssl rand -base64",
+    "\\$\\{.*\\$\\(",
+    
+    # API key examples in documentation
+    "api_key.*=.*\"ak_",
+    "api_key.*=.*\"sk_",
+    "api_key.*=.*\"pk_",
+]

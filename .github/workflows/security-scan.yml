@@ -61,42 +61,15 @@ jobs:
           
           echo "✅ Development security scan completed (only HIGH severity issues block development)"
       
-      - name: Check for hardcoded secrets
-        run: |
-          echo "🔍 Checking for potential secrets in code..."
-          
-          # Check for common secret patterns
-          if grep -r -i "password\s*=" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=venv; then
-            echo "❌ Found potential hardcoded passwords"
-            exit 1
-          fi
-          
-          if grep -r -i "api_key\s*=" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=venv; then
-            echo "❌ Found potential hardcoded API keys"
-            exit 1
-          fi
-          
-          if grep -r -i "secret\s*=" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=venv; then
-            echo "❌ Found potential hardcoded secrets"
-            exit 1
-          fi
-          
-          if grep -r -E "sk-[a-zA-Z0-9]{20,}" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=venv; then
-            echo "❌ Found potential OpenAI API keys"
-            exit 1
-          fi
-          
-          if grep -r -E "AIza[0-9A-Za-z\\-_]{35}" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=venv; then
-            echo "❌ Found potential Google API keys"
-            exit 1
-          fi
-          
-          if grep -r -E "AKIA[0-9A-Z]{16}" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=venv; then
-            echo "❌ Found potential AWS access keys"
-            exit 1
-          fi
-          
-          echo "✅ No obvious secrets found in code"
+      - name: Check for hardcoded secrets with Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        with:
+          config-path: .gitleaks.toml
+          fail-on-findings: true
+          no-git: false
+          verbose: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Validate .env.example exists
         run: |

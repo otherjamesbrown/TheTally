@@ -97,8 +97,14 @@ See [Development Setup Guide](docs/development-setup.md) for detailed instructio
 
 ## 🔒 Security
 
-TheTally implements comprehensive security measures:
+TheTally implements comprehensive security measures with a tiered approach:
 
+### Security Strategy
+- **Development Mode**: Light security scanning (HIGH severity only)
+- **Staging Mode**: Medium security scanning (HIGH + MEDIUM severity)
+- **Production Mode**: Rigorous security scanning (all severities + deployment gates)
+
+### Security Features
 - **Authentication**: JWT with refresh tokens
 - **Authorization**: Role-based access control
 - **2FA**: TOTP-based two-factor authentication
@@ -106,8 +112,10 @@ TheTally implements comprehensive security measures:
 - **Input Validation**: Comprehensive input sanitization
 - **SQL Injection Prevention**: ORM-based queries only
 - **Secrets Management**: Environment variables only
+- **Automated Scanning**: Trivy, Bandit, Safety, Semgrep, Snyk
+- **Deployment Gates**: Security checks before production deployment
 
-See [Security Guidelines](SECURITY.md) for detailed security practices.
+See [Security Guidelines](SECURITY.md) and [Branching Strategy](docs/branching-strategy.md) for detailed security practices.
 
 ## 🤖 AI-Assisted Development
 
@@ -156,6 +164,21 @@ See [AI Rules](docs/ai-rules.md) for development guidelines.
 
 ## 🛠️ Development
 
+### Branching Strategy
+
+We use a feature branch workflow with integrated security scanning:
+
+```
+main (production) ←─── develop (integration) ←─── feature/* (development)
+```
+
+- **`main`**: Production-ready code, highly protected
+- **`develop`**: Integration branch for staging/testing
+- **`feature/*`**: Development branches for new features
+- **`hotfix/*`**: Emergency fixes for production
+
+See [Branching Strategy](docs/branching-strategy.md) for detailed workflow.
+
 ### Code Quality Standards
 
 - **Python**: PEP 8 compliance with type hints
@@ -183,10 +206,14 @@ Comprehensive documentation is available in the `/docs` folder:
 - [API Specification](docs/api-specification.md) - API endpoints and schemas
 - [Database Schema](docs/database-schema.md) - Data model design
 - [Security](docs/security.md) - Security implementation
+- [Branching Strategy](docs/branching-strategy.md) - Git workflow and security integration
+- [PR Workflow](docs/pr-workflow.md) - Pull request process
 - [Testing Strategy](docs/testing-strategy.md) - Testing approach
 - [Deployment](docs/deployment.md) - Production deployment
 - [Issue Management](docs/issue-management.md) - Project management
+- [Project Management](docs/project-management.md) - Next steps tracking and workflow
 - [Frontend Troubleshooting](docs/frontend-troubleshooting.md) - Common frontend issues
+- [Security Scan Troubleshooting](docs/troubleshooting/security-scan-issues.md) - Security scan issues and solutions
 
 ## 🤝 Contributing
 
