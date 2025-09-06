@@ -211,6 +211,7 @@ Comprehensive documentation is available in the `/docs` folder:
 - [Testing Strategy](docs/testing-strategy.md) - Testing approach
 - [Deployment](docs/deployment.md) - Production deployment
 - [Issue Management](docs/issue-management.md) - Project management
+- [Project Management](docs/project-management.md) - Next steps tracking and workflow
 - [Frontend Troubleshooting](docs/frontend-troubleshooting.md) - Common frontend issues
 
 ## 🤝 Contributing
