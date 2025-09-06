@@ -60,3 +60,25 @@ You are an expert full-stack developer. Adhere to the following rules for all ge
     * Include detailed description of what was implemented
     * Reference the issue number in both commit message and code comments
     * Ensure all acceptance criteria from the issue are met before marking complete
+
+## 8. Problem-Solving Methodology
+
+* **Research-First Approach**: Before implementing custom solutions, research industry-standard tools and best practices.
+* **Failure Threshold**: After 3-5 failed attempts at solving a problem, MANDATORY pause to:
+  1. Research existing solutions in the domain
+  2. Check GitHub Actions marketplace for relevant tools
+  3. Look for established libraries/frameworks
+  4. Consider if this is a "solved problem" with mature solutions
+* **Domain Recognition**: Recognize common domains with established solutions:
+  - Secret detection → Gitleaks, TruffleHog, Semgrep
+  - Code quality → SonarQube, CodeClimate, ESLint
+  - Security scanning → Snyk, OWASP ZAP, Trivy
+  - Testing → Jest, Pytest, Playwright
+  - Monitoring → Prometheus, Grafana, DataDog
+* **Tool Evaluation**: When evaluating tools, consider:
+  - Community adoption and maintenance
+  - Integration with existing stack
+  - False positive rates
+  - Performance impact
+  - Configuration complexity
+* **Documentation**: Always document the research process and tool selection rationale in troubleshooting docs.
