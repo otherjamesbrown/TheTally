@@ -36,7 +36,7 @@ Always use environment variables for sensitive configuration:
 ```python
 # ❌ BAD - Never do this
 DATABASE_URL = "postgresql://user:password@localhost/db"
-JWT_SECRET = "my-secret-key"
+JWT_SECRET = "example-secret-key"
 
 # ✅ GOOD - Use environment variables
 import os

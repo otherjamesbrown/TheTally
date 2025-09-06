@@ -50,8 +50,8 @@ auth_service = AuthService()
 transaction_service = TransactionService()
 
 # Use services
-user = await user_service.create_user(email="user@example.com", password="secure123")
-token = await auth_service.authenticate_user(email="user@example.com", password="secure123")
+user = await user_service.create_user(email="user@example.com", password="example_password")
+token = await auth_service.authenticate_user(email="user@example.com", password="example_password")
 transactions = await transaction_service.get_user_transactions(user_id=user.id)
 ```
 

@@ -46,11 +46,11 @@ jobs:
           extra_args: --debug --only-verified
       
       - name: Run Bandit security linter for Python
-        uses: gaurav-nelson/bandit-action@v1.0.0
-        with:
-          path: backend/
-          level: medium
-          confidence: medium
+        run: |
+          echo "🔍 Running Bandit security linter for Python code..."
+          pip install bandit
+          bandit -r backend/ -f json -o bandit-results.json || true
+          bandit -r backend/ -ll
       
       - name: Check for hardcoded secrets
         run: |
