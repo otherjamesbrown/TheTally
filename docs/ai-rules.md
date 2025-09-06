@@ -82,3 +82,22 @@ You are an expert full-stack developer. Adhere to the following rules for all ge
   - Performance impact
   - Configuration complexity
 * **Documentation**: Always document the research process and tool selection rationale in troubleshooting docs.
+
+## 9. Local Testing Best Practices
+
+* **MANDATORY Local Testing**: Before committing any changes that affect CI/CD pipelines, security scans, or external integrations:
+  1. **Test locally first** using the same tools/versions as CI/CD
+  2. **Use Docker** when possible to match production environments
+  3. **Verify configuration files** work correctly before pushing
+  4. **Test with realistic data** to catch edge cases
+* **Security Scans**: Always test security scanning tools locally:
+  - Use Docker: `docker run --rm -v $(pwd):/repo zricethezav/gitleaks:latest detect --source /repo --config /repo/.gitleaks.toml --verbose`
+  - Verify configuration files parse correctly
+  - Test with actual repository data
+  - Confirm exclusions work as expected
+* **Configuration Validation**: For any configuration files (TOML, YAML, JSON):
+  - Validate syntax locally before committing
+  - Test with the actual tool that will use the config
+  - Use official documentation and examples as reference
+* **Time Investment**: Local testing saves 10x the time compared to CI/CD iteration cycles
+* **Documentation**: Document local testing commands and setup in troubleshooting docs

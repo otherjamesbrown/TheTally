@@ -48,7 +48,24 @@ When evaluating tools, consider:
 - **Integration** with existing stack
 - **False positive rates** (critical for our use case)
 - **Performance impact** on CI/CD
-- **Configuration complexity** vs custom solution
+- **Configuration complexity**
+
+### 5. Local Testing Best Practices
+**MANDATORY for CI/CD changes:**
+- **Test locally first** using Docker to match production
+- **Validate configuration files** before committing
+- **Use official documentation** as reference
+- **Test with realistic data** to catch edge cases
+
+**Example - Gitleaks Local Testing:**
+```bash
+# Test Gitleaks configuration locally
+docker run --rm -v $(pwd):/repo zricethezav/gitleaks:latest detect --source /repo --config /repo/.gitleaks.toml --verbose
+```
+
+**Time Investment:**
+- Local testing saves 10x the time vs CI/CD iteration cycles
+- 5 minutes local testing vs 50+ failed CI/CD runs vs custom solution
 
 ## Implementation
 
