@@ -185,7 +185,7 @@ class TestAuthService:
         """Test user authentication with invalid credentials."""
         login_data = UserLoginRequest(
             email="nonexistent@example.com",
-            password="wrongpassword"
+            password="wrongpassword"  # nosec B105
         )
         
         with pytest.raises(ValueError, match="Invalid email or password"):
@@ -203,7 +203,7 @@ class TestAuthService:
         # Try to authenticate with wrong password
         login_data = UserLoginRequest(
             email="test@example.com",
-            password="WrongPass123!"
+            password="WrongPass123!"  # nosec B105
         )
         
         with pytest.raises(ValueError, match="Invalid email or password"):
@@ -237,7 +237,7 @@ class TestAuthService:
         user, _, _ = AuthService.register_user(db_session, user_data, "test-tenant")
         
         # Try to setup 2FA with wrong password
-        setup_data = TwoFactorSetupRequest(password="WrongPass123!")
+        setup_data = TwoFactorSetupRequest(password="WrongPass123!")  # nosec B105
         
         with pytest.raises(ValueError, match="Invalid password"):
             AuthService.setup_2fa(db_session, user, setup_data)
