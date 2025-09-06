@@ -8,7 +8,7 @@ This module provides database session management with support for:
 - Multi-tenant architecture
 """
 
-from sqlalchemy import create_engine, event
+from sqlalchemy import create_engine, event, text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import QueuePool
@@ -125,7 +125,7 @@ def test_database_connection():
     """
     try:
         with engine.connect() as connection:
-            result = connection.execute("SELECT 1 as test")
+            result = connection.execute(text("SELECT 1 as test"))
             test_value = result.scalar()
             if test_value == 1:
                 logger.info("Database connection test successful")
