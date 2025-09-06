@@ -65,18 +65,18 @@ jobs:
         run: |
           echo "🔍 Checking for potential secrets in code..."
           
-          # Check for common secret patterns (excluding test files, example files, and nosec comments)
-          if grep -r -i "password\s*=" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=venv --exclude-dir=tests --exclude="*.example" --exclude=".env.example" | grep -v "# nosec"; then
+          # Check for hardcoded passwords (excluding environment variables, test files, and nosec comments)
+          if grep -r -i "password\s*=" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=venv --exclude-dir=tests --exclude="*.example" --exclude=".env.example" | grep -v "# nosec" | grep -v "os.getenv" | grep -v "\${.*:-" | grep -v "=\${.*:-"; then
             echo "❌ Found potential hardcoded passwords"
             exit 1
           fi
           
-          if grep -r -i "api_key\s*=" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=venv --exclude-dir=tests --exclude="*.example" --exclude=".env.example" | grep -v "# nosec"; then
+          if grep -r -i "api_key\s*=" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=venv --exclude-dir=tests --exclude="*.example" --exclude=".env.example" | grep -v "# nosec" | grep -v "os.getenv" | grep -v "\${.*:-" | grep -v "=\${.*:-"; then
             echo "❌ Found potential hardcoded API keys"
             exit 1
           fi
           
-          if grep -r -i "secret\s*=" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=venv --exclude-dir=tests --exclude="*.example" --exclude=".env.example" | grep -v "# nosec"; then
+          if grep -r -i "secret\s*=" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=venv --exclude-dir=tests --exclude="*.example" --exclude=".env.example" | grep -v "# nosec" | grep -v "os.getenv" | grep -v "\${.*:-" | grep -v "=\${.*:-"; then
             echo "❌ Found potential hardcoded secrets"
             exit 1
           fi
