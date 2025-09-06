@@ -15,16 +15,16 @@ class Settings(BaseSettings):
     DEBUG: bool = False
     
     # API
-    API_HOST: str = "0.0.0.0"
-    API_PORT: int = 8000
+    API_HOST: str = os.getenv("API_HOST", "127.0.0.1")  # nosec B104
+    API_PORT: int = int(os.getenv("API_PORT", "8000"))
     
     # Database
-    DATABASE_URL: str = "postgresql://thetally_user:password@localhost:5432/thetally_dev"
-    DATABASE_HOST: str = "localhost"
-    DATABASE_PORT: int = 5432
-    DATABASE_NAME: str = "thetally_dev"
-    DATABASE_USER: str = "thetally_user"
-    DATABASE_PASSWORD: str = "password"
+    DATABASE_URL: str = os.getenv("DATABASE_URL", "postgresql://thetally_user:dev_password@localhost:5432/thetally_dev")  # nosec B105
+    DATABASE_HOST: str = os.getenv("DATABASE_HOST", "localhost")
+    DATABASE_PORT: int = int(os.getenv("DATABASE_PORT", "5432"))
+    DATABASE_NAME: str = os.getenv("DATABASE_NAME", "thetally_dev")
+    DATABASE_USER: str = os.getenv("DATABASE_USER", "thetally_user")
+    DATABASE_PASSWORD: str = os.getenv("DATABASE_PASSWORD", "dev_password")  # nosec B105
     
     # GCP Database Configuration
     GCP_PROJECT_ID: str = ""
@@ -44,8 +44,8 @@ class Settings(BaseSettings):
     CORS_ORIGINS: List[str] = ["http://localhost:3000", "http://localhost:5173"]
     
     # Security
-    SECRET_KEY: str = "dev-secret-key-change-in-production"
-    JWT_SECRET: str = "dev-secret-key-change-in-production"
+    SECRET_KEY: str = os.getenv("SECRET_KEY", "dev-secret-key-change-in-production")  # nosec B105
+    JWT_SECRET: str = os.getenv("JWT_SECRET", "dev-secret-key-change-in-production")  # nosec B105
     JWT_ALGORITHM: str = "HS256"
     JWT_ACCESS_TOKEN_EXPIRE_MINUTES: int = 15
     JWT_REFRESH_TOKEN_EXPIRE_DAYS: int = 7

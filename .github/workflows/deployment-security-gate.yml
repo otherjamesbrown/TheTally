@@ -1,0 +1,109 @@
+name: Deployment Security Gate
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*' ]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Target environment'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+        - production
+        - staging
+
+jobs:
+  security-gate:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v')
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Wait for security scans to complete
+        uses: lewagon/wait-on-check-action@v1.3.1
+        with:
+          ref: ${{ github.ref }}
+          check-name: 'Production Security Scan'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          wait-interval: 10
+          allowed-conclusions: success
+      
+      - name: Verify security scan results
+        run: |
+          echo "🔍 Verifying security scan results..."
+          
+          # Check if security scans passed
+          if ! gh api repos/${{ github.repository }}/actions/runs --jq '.workflow_runs[0].conclusion' | grep -q "success"; then
+            echo "❌ Security scans did not pass"
+            exit 1
+          fi
+          
+          echo "✅ Security scans verified"
+      
+      - name: Check for security advisories
+        run: |
+          echo "🔍 Checking for security advisories..."
+          
+          # Check if there are any open security advisories
+          if gh api repos/${{ github.repository }}/security-advisories --jq '.[] | select(.state == "published")' | grep -q "published"; then
+            echo "❌ Open security advisories found"
+            gh api repos/${{ github.repository }}/security-advisories --jq '.[] | select(.state == "published")'
+            exit 1
+          fi
+          
+          echo "✅ No open security advisories"
+      
+      - name: Validate production readiness
+        run: |
+          echo "🔍 Validating production readiness..."
+          
+          # Check that all required environment variables are documented
+          required_env_vars=(
+            "DATABASE_URL"
+            "SECRET_KEY"
+            "JWT_SECRET"
+            "API_HOST"
+            "API_PORT"
+            "FRONTEND_URL"
+          )
+          
+          for var in "${required_env_vars[@]}"; do
+            if ! grep -q "$var" .env.example; then
+              echo "❌ Missing required environment variable in .env.example: $var"
+              exit 1
+            fi
+          done
+          
+          # Check that no development secrets are in production config
+          if grep -r "dev-secret" config/environments/production.yaml; then
+            echo "❌ Development secrets found in production config"
+            exit 1
+          fi
+          
+          # Check that debug mode is disabled in production
+          if grep -r "debug.*true" config/environments/production.yaml; then
+            echo "❌ Debug mode enabled in production config"
+            exit 1
+          fi
+          
+          echo "✅ Production readiness validated"
+      
+      - name: Generate security report
+        run: |
+          echo "## 🔒 Security Gate Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "✅ All security scans passed" >> $GITHUB_STEP_SUMMARY
+          echo "✅ No open security advisories" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Production configuration validated" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Environment variables documented" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Deployment approved for production**" >> $GITHUB_STEP_SUMMARY
+      
+      - name: Approve deployment
+        run: |
+          echo "✅ Security gate passed - deployment approved"
