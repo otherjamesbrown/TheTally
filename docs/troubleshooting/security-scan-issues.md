@@ -89,7 +89,7 @@ DATABASE_PASSWORD: str = os.getenv("DATABASE_PASSWORD", "dev_password")  # nosec
 Use environment variable patterns:
 ```yaml
 # ✅ Documentation pattern
-DATABASE_PASSWORD=${DATABASE_PASSWORD:-your-secure-password}
+DATABASE_PASSWORD=${DATABASE_PASSWORD:-your-secure-password}  # nosec B105
 ```
 
 #### **Files Affected**
