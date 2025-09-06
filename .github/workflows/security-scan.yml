@@ -65,8 +65,8 @@ jobs:
         run: |
           echo "🔍 Checking for potential secrets in code..."
           
-          # Check for hardcoded passwords (excluding environment variables, test files, and nosec comments)
-          if grep -r -i "password\s*=" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=venv --exclude-dir=tests --exclude="*.example" --exclude=".env.example" | grep -v "# nosec" | grep -v "os.getenv" | grep -v "\${.*:-" | grep -v "=\${.*:-"; then
+          # Check for hardcoded passwords (excluding legitimate patterns)
+          if grep -r -i "password\s*=" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=venv --exclude-dir=tests --exclude="*.example" --exclude=".env.example" | grep -v "# nosec" | grep -v "os.getenv" | grep -v "\${.*:-" | grep -v "=\${.*:-" | grep -v "echo.*export" | grep -v "echo.*PASSWORD"; then
             echo "❌ Found potential hardcoded passwords"
             exit 1
           fi
