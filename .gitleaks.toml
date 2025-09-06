@@ -41,7 +41,7 @@ regexes = [
   "\\$\\{.*\\$\\(",
 ]
 
-[allowlist.paths]
+[[allowlist.paths]]
 description = "Allow specific file patterns that contain legitimate examples"
 regexes = [
   ".*\\.example$",
@@ -54,7 +54,7 @@ regexes = [
   ".*troubleshooting/.*",
 ]
 
-[allowlist.commits]
+[[allowlist.commits]]
 description = "Allow specific commit patterns if needed"
 regexes = [
   ".*nosec.*",
