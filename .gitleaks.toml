@@ -41,8 +41,8 @@ regexes = [
   "\\$\\{.*\\$\\(",
 ]
 
-[[allowlist.paths]]
-description = "Allow specific file patterns that contain legitimate examples"
+# Allow specific file patterns that contain legitimate examples
+[allowlist.paths]
 regexes = [
   ".*\\.example$",
   ".*\\.env\\.example$",
@@ -54,29 +54,10 @@ regexes = [
   ".*troubleshooting/.*",
 ]
 
-[[allowlist.commits]]
-description = "Allow specific commit patterns if needed"
+# Allow specific commit patterns if needed
+[allowlist.commits]
 regexes = [
   ".*nosec.*",
   ".*example.*",
   ".*test.*",
 ]
-
-# Custom rules for our specific patterns
-[[rules]]
-description = "Custom rule for environment variable assignments"
-regex = '''password\s*=\s*["']?[^"']*["']?'''
-entropy = 0
-tags = ["custom", "environment"]
-
-[[rules]]
-description = "Custom rule for API key assignments"
-regex = '''api_key\s*=\s*["']?[^"']*["']?'''
-entropy = 0
-tags = ["custom", "api"]
-
-[[rules]]
-description = "Custom rule for secret assignments"
-regex = '''secret\s*=\s*["']?[^"']*["']?'''
-entropy = 0
-tags = ["custom", "secret"]
