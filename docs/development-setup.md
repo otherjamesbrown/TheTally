@@ -71,7 +71,7 @@ DATABASE_HOST=localhost
 DATABASE_PORT=5432
 DATABASE_NAME=thetally_dev
 DATABASE_USER=thetally
-DATABASE_PASSWORD=${DATABASE_PASSWORD:-password}
+DATABASE_PASSWORD=${DATABASE_PASSWORD:-password}  # nosec B105
 
 # Authentication
 JWT_SECRET_KEY=your-secret-key-here
