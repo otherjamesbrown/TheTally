@@ -86,7 +86,7 @@ fi
 
 # Set root password
 echo -e "${BLUE}🔐 Setting root password...${NC}"
-ROOT_PASSWORD=$(openssl rand -base64 32)
+ROOT_PASSWORD=$(openssl rand -base64 32)  # nosec B105
 gcloud sql users set-password root \
     --host=% \
     --instance="$INSTANCE_NAME" \
@@ -101,7 +101,7 @@ gcloud sql databases create "$DATABASE_NAME" \
 
 # Create database user
 echo -e "${BLUE}👤 Creating database user: $DATABASE_USER${NC}"
-DB_PASSWORD=$(openssl rand -base64 32)
+DB_PASSWORD=$(openssl rand -base64 32)  # nosec B105
 gcloud sql users create "$DATABASE_USER" \
     --instance="$INSTANCE_NAME" \
     --password="$DB_PASSWORD" \
