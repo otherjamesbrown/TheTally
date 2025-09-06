@@ -13,6 +13,7 @@ from sqlalchemy.orm import Session
 import structlog
 
 from app.db.session import get_db
+from app.models.user import User
 from app.schemas.auth import (
     UserRegisterRequest, UserLoginRequest, TokenResponse, UserResponse,
     TwoFactorSetupRequest, TwoFactorSetupResponse, TwoFactorVerifyRequest,

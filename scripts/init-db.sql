@@ -11,8 +11,8 @@ SET timezone = 'UTC';
 -- Create additional schemas if needed
 -- CREATE SCHEMA IF NOT EXISTS audit;
 
--- Grant necessary permissions
-GRANT ALL PRIVILEGES ON DATABASE thetally_prod TO thetally_user;
+-- Grant necessary permissions on the current database (thetally_dev)
+GRANT ALL PRIVILEGES ON DATABASE thetally_dev TO thetally_user;
 GRANT ALL PRIVILEGES ON SCHEMA public TO thetally_user;
 
 -- The actual tables will be created by Alembic migrations

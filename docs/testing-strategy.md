@@ -114,21 +114,43 @@ backend/tests/integration/
 - **Environments**: Staging and production
 
 #### What to Test
-- Complete user journeys
+- Complete user journeys from start to finish
 - Cross-browser compatibility
 - Performance and accessibility
 - Real API integration
 - File upload and processing
+- **CRITICAL**: End-to-end verification that expected pages render correctly
+- **CRITICAL**: Full user experience validation, not just partial functionality
 
 #### Example Test Scenarios
 ```typescript
-// User registration and login
-test('User can register and login', async ({ page }) => {
+// User registration and login - COMPLETE FLOW
+test('User can register and login with full verification', async ({ page }) => {
+  // Registration
   await page.goto('/register');
   await page.fill('[data-testid="email"]', 'test@example.com');
   await page.fill('[data-testid="password"]', 'password123');
   await page.click('[data-testid="register-button"]');
   await expect(page).toHaveURL('/dashboard');
+  
+  // CRITICAL: Verify dashboard renders correctly with user data
+  await expect(page.getByText('Welcome, Test User!')).toBeVisible();
+  await expect(page.getByText('Email: test@example.com')).toBeVisible();
+  await expect(page.getByText('Status: Active')).toBeVisible();
+  
+  // Logout
+  await page.getByTestId('logout-button').click();
+  await expect(page).toHaveURL('/login');
+  
+  // Login
+  await page.fill('[data-testid="email"]', 'test@example.com');
+  await page.fill('[data-testid="password"]', 'password123');
+  await page.click('[data-testid="login-button"]');
+  await expect(page).toHaveURL('/dashboard');
+  
+  // CRITICAL: Verify dashboard renders correctly after login
+  await expect(page.getByText('Welcome, Test User!')).toBeVisible();
+  await expect(page.getByText('Email: test@example.com')).toBeVisible();
 });
 
 // File upload and transaction import
@@ -194,6 +216,22 @@ test('User can upload CSV and view transactions', async ({ page }) => {
 - **Test Data**: Consistent test data setup
 - **External Services**: Mock external dependencies
 - **Database**: Isolated test database
+
+## Test Completion Requirements
+
+### E2E Test Standards
+- **Complete User Journeys**: Tests must verify the entire user flow from start to finish
+- **Page Rendering Verification**: Tests must confirm that expected pages render correctly with proper content
+- **No Partial Success**: Tests that only verify partial functionality (e.g., redirects but not content) are considered failures
+- **Real Data Validation**: Tests must verify that actual data is displayed correctly, not just that pages load
+- **Error State Testing**: Tests must verify both success and error scenarios completely
+
+### Test Failure Criteria
+- ❌ **Page redirects but shows error content**
+- ❌ **API calls succeed but UI doesn't display data**
+- ❌ **Authentication works but dashboard shows "Failed to load user data"**
+- ❌ **Forms submit but don't show success/error feedback**
+- ✅ **Complete user experience works end-to-end**
 
 ## Quality Gates
 

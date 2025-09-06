@@ -306,6 +306,60 @@ pre-commit install
 pre-commit run --all-files
 ```
 
+## Dependency Management
+
+### Version Stability Guidelines
+
+**CRITICAL**: Always use stable, production-ready versions of dependencies to avoid rendering issues.
+
+#### React Ecosystem Stability
+- **React**: Use LTS versions (currently 18.x) - avoid pre-release versions
+- **Material-UI**: Use stable v5.x - avoid v6+ until fully released
+- **React Router**: Use stable v6.x - avoid pre-release versions
+- **ESLint**: Use stable v8.x - avoid v9+ until ecosystem catches up
+
+#### Dependency Update Process
+1. **Check Release Status**: Verify all dependencies are stable releases
+2. **Test Incrementally**: Update one major dependency at a time
+3. **Run Full Test Suite**: Ensure all E2E tests pass after updates
+4. **Verify Rendering**: Confirm UI renders correctly in all browsers
+
+#### Prohibited Practices
+- ❌ **Never use pre-release versions** in production or development
+- ❌ **Never update multiple major versions** simultaneously
+- ❌ **Never skip testing** after dependency updates
+- ❌ **Never ignore peer dependency warnings**
+
+#### Safe Update Commands
+```bash
+# Check for outdated packages
+npm outdated
+
+# Update to latest stable versions only
+npm update
+
+# Check for security vulnerabilities
+npm audit
+
+# Fix vulnerabilities (avoid breaking changes)
+npm audit fix
+```
+
+#### Version Lock Strategy
+```json
+{
+  "dependencies": {
+    "react": "^18.2.0",           // Lock to stable LTS
+    "react-dom": "^18.2.0",       // Match React version
+    "@mui/material": "^5.15.20",  // Stable Material-UI v5
+    "react-router-dom": "^6.28.0" // Stable React Router v6
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0"           // Stable ESLint v8
+  }
+}
+```
+
 ## Troubleshooting
 
 ### Common Issues
@@ -336,6 +390,50 @@ npm install
 
 # Build issues
 npm run build
+```
+
+#### Frontend Rendering Issues
+```bash
+# Blank white screen - check for JavaScript errors
+# 1. Open browser DevTools (F12)
+# 2. Check Console tab for errors
+# 3. Check Network tab for failed requests
+
+# Common causes and fixes:
+# - React version incompatibility
+npm install react@^18.2.0 react-dom@^18.2.0
+
+# - Material-UI version issues
+npm install @mui/material@^5.15.20 @mui/icons-material@^5.15.20
+
+# - ESLint configuration issues
+npm install eslint@^8.57.0
+
+# - Clear browser cache completely
+# Chrome: Ctrl+Shift+Delete, select "All time"
+# Or use incognito mode
+
+# - Check for peer dependency conflicts
+npm ls --depth=0
+
+# - Verify all imports are correct
+# Check for missing imports in console errors
+```
+
+#### Dependency Conflict Resolution
+```bash
+# Check for version conflicts
+npm ls
+
+# Force resolution of peer dependencies
+npm install --legacy-peer-deps
+
+# Or use exact versions to avoid conflicts
+npm install --save-exact react@18.2.0
+
+# Clean install after fixing conflicts
+rm -rf node_modules package-lock.json
+npm install
 ```
 
 #### Docker Issues

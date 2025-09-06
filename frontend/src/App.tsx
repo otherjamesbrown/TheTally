@@ -1,18 +1,16 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import { Box, AppBar, Toolbar, Typography, Container } from '@mui/material';
+import { CssBaseline, Box } from '@mui/material';
 import HomePage from './pages/HomePage';
-import HealthPage from './pages/HealthPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import DashboardPage from './pages/DashboardPage';
+import HealthPage from './pages/HealthPage';
 
-// Create theme
+// Create Material-UI theme
 const theme = createTheme({
   palette: {
-    mode: 'light',
     primary: {
       main: '#1976d2',
     },
@@ -23,28 +21,20 @@ const theme = createTheme({
 });
 
 function App() {
+  console.log('App component is rendering');
+  
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Router>
-        <Box sx={{ flexGrow: 1 }}>
-          <AppBar position="static">
-            <Toolbar>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                TheTally
-              </Typography>
-            </Toolbar>
-          </AppBar>
-          
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/health" element={<HealthPage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/register" element={<RegisterPage />} />
-              <Route path="/dashboard" element={<DashboardPage />} />
-            </Routes>
-          </Container>
+      <Router future={{ v7_startTransition: true }}>
+        <Box sx={{ minHeight: '100vh' }}>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/health" element={<HealthPage />} />
+          </Routes>
         </Box>
       </Router>
     </ThemeProvider>
