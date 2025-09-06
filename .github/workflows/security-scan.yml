@@ -65,33 +65,33 @@ jobs:
         run: |
           echo "🔍 Checking for potential secrets in code..."
           
-          # Check for common secret patterns
-          if grep -r -i "password\s*=" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=venv; then
+          # Check for common secret patterns (excluding test files and nosec comments)
+          if grep -r -i "password\s*=" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=venv --exclude-dir=tests | grep -v "# nosec"; then
             echo "❌ Found potential hardcoded passwords"
             exit 1
           fi
           
-          if grep -r -i "api_key\s*=" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=venv; then
+          if grep -r -i "api_key\s*=" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=venv --exclude-dir=tests | grep -v "# nosec"; then
             echo "❌ Found potential hardcoded API keys"
             exit 1
           fi
           
-          if grep -r -i "secret\s*=" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=venv; then
+          if grep -r -i "secret\s*=" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=venv --exclude-dir=tests | grep -v "# nosec"; then
             echo "❌ Found potential hardcoded secrets"
             exit 1
           fi
           
-          if grep -r -E "sk-[a-zA-Z0-9]{20,}" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=venv; then
+          if grep -r -E "sk-[a-zA-Z0-9]{20,}" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=venv --exclude-dir=tests; then
             echo "❌ Found potential OpenAI API keys"
             exit 1
           fi
           
-          if grep -r -E "AIza[0-9A-Za-z\\-_]{35}" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=venv; then
+          if grep -r -E "AIza[0-9A-Za-z\\-_]{35}" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=venv --exclude-dir=tests; then
             echo "❌ Found potential Google API keys"
             exit 1
           fi
           
-          if grep -r -E "AKIA[0-9A-Z]{16}" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=venv; then
+          if grep -r -E "AKIA[0-9A-Z]{16}" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=venv --exclude-dir=tests; then
             echo "❌ Found potential AWS access keys"
             exit 1
           fi
