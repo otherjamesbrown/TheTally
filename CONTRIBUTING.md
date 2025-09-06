@@ -18,7 +18,16 @@ We are committed to providing a welcoming and inclusive environment for all cont
 1. Fork the repository
 2. Clone your fork: `git clone https://github.com/yourusername/TheTally.git`
 3. Follow the [Development Setup Guide](docs/development-setup.md)
-4. Create a feature branch: `git checkout -b feature/your-feature-name`
+4. Create a feature branch from `develop`: `git checkout develop && git checkout -b feature/your-feature-name`
+
+### Branching Strategy
+We use a feature branch workflow with integrated security scanning:
+- **`main`**: Production-ready code, highly protected
+- **`develop`**: Integration branch for staging/testing  
+- **`feature/*`**: Development branches for new features
+- **`hotfix/*`**: Emergency fixes for production
+
+See [Branching Strategy](docs/branching-strategy.md) for detailed workflow.
 
 ## Development Process
 
@@ -30,6 +39,10 @@ We are committed to providing a welcoming and inclusive environment for all cont
 
 ### 2. Development Workflow
 ```bash
+# Start from develop branch
+git checkout develop
+git pull origin develop
+
 # Create feature branch
 git checkout -b feature/your-feature-name
 
@@ -55,12 +68,13 @@ git push origin feature/your-feature-name
 ```
 
 ### 3. Pull Request Process
-1. Create a pull request from your feature branch
+1. Create a pull request from your feature branch to `develop`
 2. Fill out the pull request template
-3. Ensure all checks pass (tests, linting, security)
+3. Ensure all checks pass (tests, linting, security scans)
 4. Request review from maintainers
 5. Address feedback and make requested changes
-6. Once approved, maintainers will merge your PR
+6. Once approved, maintainers will merge your PR to `develop`
+7. For production releases, create a PR from `develop` to `main`
 
 ## Coding Standards
 
