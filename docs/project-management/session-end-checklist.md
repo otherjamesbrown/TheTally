@@ -7,8 +7,9 @@ This checklist ensures comprehensive context preservation every time a developme
 When the user indicates they're ending a session, follow this checklist:
 
 ### 1. **Create Session Summary** 📝
-- **File**: `docs/session-summaries/YYYY-MM-DD-session-topic.md`
+- **File**: `docs/session-summaries/YYYY-MM-DD-HHMM-session-topic.md` (include timestamp for multiple daily sessions)
 - **Include**:
+  - **Date & Time**: Full timestamp (e.g., "2025-09-06 12:25 BST")
   - Session objectives and accomplishments
   - Technical changes made with code examples
   - Issues encountered and solutions
@@ -48,10 +49,11 @@ When the user indicates they're ending a session, follow this checklist:
 ## 📋 **Session Summary Template**
 
 ```markdown
-# Session Summary: YYYY-MM-DD
+# Session Summary: YYYY-MM-DD-HHMM
 ## [Session Topic]
 
 **Date**: [Date]  
+**Time**: [Time with timezone]  
 **Duration**: [Duration]  
 **Focus**: [Main focus areas]
 
