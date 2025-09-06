@@ -29,7 +29,7 @@ class TestSecurityUtils:
     
     def test_hash_password(self):
         """Test password hashing."""
-        password = "TestPass123!"
+        password = "TestPass123!"  # nosec B105
         hashed = SecurityUtils.hash_password(password)
         
         assert hashed != password
@@ -53,7 +53,7 @@ class TestSecurityUtils:
     
     def test_verify_password(self):
         """Test password verification."""
-        password = "TestPass123!"
+        password = "TestPass123!"  # nosec B105
         hashed = SecurityUtils.hash_password(password)
         
         assert SecurityUtils.verify_password(password, hashed)
@@ -129,7 +129,7 @@ class TestAuthService:
         """Test successful user registration."""
         user_data = UserRegisterRequest(
             email="test@example.com",
-            password="TestPass123!",
+            password="TestPass123!"  # nosec B105,  # nosec B105
             first_name="Test",
             last_name="User"
         )
@@ -149,7 +149,7 @@ class TestAuthService:
         """Test user registration with duplicate email."""
         user_data = UserRegisterRequest(
             email="test@example.com",
-            password="TestPass123!"
+            password="TestPass123!"  # nosec B105
         )
         
         # Register first user
@@ -164,14 +164,14 @@ class TestAuthService:
         # Register user first
         user_data = UserRegisterRequest(
             email="test@example.com",
-            password="TestPass123!"
+            password="TestPass123!"  # nosec B105
         )
         user, _, _ = AuthService.register_user(db_session, user_data, "test-tenant")
         
         # Authenticate user
         login_data = UserLoginRequest(
             email="test@example.com",
-            password="TestPass123!"
+            password="TestPass123!"  # nosec B105
         )
         auth_user, access_token, refresh_token = AuthService.authenticate_user(
             db_session, login_data, "test-tenant"
@@ -196,7 +196,7 @@ class TestAuthService:
         # Register user first
         user_data = UserRegisterRequest(
             email="test@example.com",
-            password="TestPass123!"
+            password="TestPass123!"  # nosec B105
         )
         AuthService.register_user(db_session, user_data, "test-tenant")
         
@@ -214,12 +214,12 @@ class TestAuthService:
         # Register user first
         user_data = UserRegisterRequest(
             email="test@example.com",
-            password="TestPass123!"
+            password="TestPass123!"  # nosec B105
         )
         user, _, _ = AuthService.register_user(db_session, user_data, "test-tenant")
         
         # Setup 2FA
-        setup_data = TwoFactorSetupRequest(password="TestPass123!")
+        setup_data = TwoFactorSetupRequest(password="TestPass123!"  # nosec B105)
         result = AuthService.setup_2fa(db_session, user, setup_data)
         
         assert "secret" in result
@@ -232,7 +232,7 @@ class TestAuthService:
         # Register user first
         user_data = UserRegisterRequest(
             email="test@example.com",
-            password="TestPass123!"
+            password="TestPass123!"  # nosec B105
         )
         user, _, _ = AuthService.register_user(db_session, user_data, "test-tenant")
         
@@ -247,11 +247,11 @@ class TestAuthService:
         # Register user and setup 2FA
         user_data = UserRegisterRequest(
             email="test@example.com",
-            password="TestPass123!"
+            password="TestPass123!"  # nosec B105
         )
         user, _, _ = AuthService.register_user(db_session, user_data, "test-tenant")
         
-        setup_data = TwoFactorSetupRequest(password="TestPass123!")
+        setup_data = TwoFactorSetupRequest(password="TestPass123!"  # nosec B105)
         AuthService.setup_2fa(db_session, user, setup_data)
         
         # Mock TOTP verification
@@ -267,7 +267,7 @@ class TestAuthService:
         # Register user first
         user_data = UserRegisterRequest(
             email="test@example.com",
-            password="TestPass123!"
+            password="TestPass123!"  # nosec B105
         )
         user, _, refresh_token = AuthService.register_user(db_session, user_data, "test-tenant")
         
@@ -289,7 +289,7 @@ class TestAuthEndpoints:
         """Test successful user registration endpoint."""
         user_data = {
             "email": "test@example.com",
-            "password": "TestPass123!",
+            "password": "TestPass123!"  # nosec B105,
             "first_name": "Test",
             "last_name": "User"
         }
@@ -321,7 +321,7 @@ class TestAuthEndpoints:
         """Test user registration endpoint with duplicate email."""
         user_data = {
             "email": "test@example.com",
-            "password": "TestPass123!"
+            "password": "TestPass123!"  # nosec B105
         }
         
         with patch('app.api.routers.auth.get_db', return_value=db_session):
@@ -339,7 +339,7 @@ class TestAuthEndpoints:
         # Register user first
         user_data = {
             "email": "test@example.com",
-            "password": "TestPass123!"
+            "password": "TestPass123!"  # nosec B105
         }
         
         with patch('app.api.routers.auth.get_db', return_value=db_session):
@@ -348,7 +348,7 @@ class TestAuthEndpoints:
             # Login
             login_data = {
                 "email": "test@example.com",
-                "password": "TestPass123!"
+                "password": "TestPass123!"  # nosec B105
             }
             response = client.post("/api/v1/auth/login", json=login_data)
         
@@ -376,7 +376,7 @@ class TestAuthEndpoints:
         # Register user and get refresh token
         user_data = {
             "email": "test@example.com",
-            "password": "TestPass123!"
+            "password": "TestPass123!"  # nosec B105
         }
         
         with patch('app.api.routers.auth.get_db', return_value=db_session):
@@ -407,7 +407,7 @@ class TestAuthEndpoints:
         # Register user and get access token
         user_data = {
             "email": "test@example.com",
-            "password": "TestPass123!"
+            "password": "TestPass123!"  # nosec B105
         }
         
         with patch('app.api.routers.auth.get_db', return_value=db_session):
@@ -436,7 +436,7 @@ class TestAuthEndpoints:
         # Register user and get access token
         user_data = {
             "email": "test@example.com",
-            "password": "TestPass123!"
+            "password": "TestPass123!"  # nosec B105
         }
         
         with patch('app.api.routers.auth.get_db', return_value=db_session):
@@ -459,7 +459,7 @@ class TestAuthEndpoints:
         # Register user, setup 2FA, and get access token
         user_data = {
             "email": "test@example.com",
-            "password": "TestPass123!"
+            "password": "TestPass123!"  # nosec B105
         }
         
         with patch('app.api.routers.auth.get_db', return_value=db_session):
@@ -486,7 +486,7 @@ class TestAuthEndpoints:
         # Register user and get access token
         user_data = {
             "email": "test@example.com",
-            "password": "TestPass123!"
+            "password": "TestPass123!"  # nosec B105
         }
         
         with patch('app.api.routers.auth.get_db', return_value=db_session):

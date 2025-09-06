@@ -4,6 +4,36 @@
 
 This repository is **public** and open source. Follow these security guidelines to protect sensitive information and maintain security best practices.
 
+## 🛡️ Tiered Security Strategy
+
+TheTally implements a comprehensive, tiered security approach that scales with the development lifecycle:
+
+### Development Mode (Feature Branches)
+- **Target**: `feature/*` branches
+- **Rigor**: Light security scanning
+- **Tools**: Trivy, Bandit (HIGH severity only), TruffleHog
+- **Purpose**: Fast feedback for developers, catch critical issues early
+- **Failure Criteria**: Only HIGH severity security issues block development
+
+### Staging Mode (Develop Branch)
+- **Target**: `develop` branch
+- **Rigor**: Medium security scanning
+- **Tools**: Trivy, Bandit (HIGH + MEDIUM severity), TruffleHog
+- **Purpose**: Ensure integrated features are reasonably secure before production
+- **Failure Criteria**: HIGH and MEDIUM severity issues block staging deployment
+
+### Production Mode (Main Branch)
+- **Target**: `main` branch
+- **Rigor**: Rigorous security scanning
+- **Tools**: Trivy, Bandit, Safety, Semgrep, Snyk, Deployment Security Gate
+- **Purpose**: Guarantee highest security level for production deployments
+- **Failure Criteria**: Any HIGH or MEDIUM severity issues block production deployment
+
+### Security Workflows
+- **Development**: `.github/workflows/security-scan.yml`
+- **Production**: `.github/workflows/security-scan-production.yml`
+- **Deployment Gate**: `.github/workflows/deployment-security-gate.yml`
+
 ## 🚨 Critical Security Rules
 
 ### ❌ NEVER Commit These to the Repository

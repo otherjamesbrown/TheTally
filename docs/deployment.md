@@ -242,6 +242,35 @@ HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
 CMD ["nginx", "-g", "daemon off;"]
 ```
 
+## Security-First Deployment Strategy
+
+### Tiered Security Approach
+
+TheTally implements a comprehensive security strategy that scales with deployment environments:
+
+#### Development Deployment (Feature Branches)
+- **Target**: Feature branch deployments
+- **Security Level**: Light scanning (HIGH severity only)
+- **Purpose**: Fast iteration and development feedback
+- **Tools**: Trivy, Bandit (HIGH only), TruffleHog
+
+#### Staging Deployment (Develop Branch)
+- **Target**: Staging environment
+- **Security Level**: Medium scanning (HIGH + MEDIUM severity)
+- **Purpose**: Integration testing and pre-production validation
+- **Tools**: Trivy, Bandit (HIGH + MEDIUM), TruffleHog
+
+#### Production Deployment (Main Branch)
+- **Target**: Production environment
+- **Security Level**: Rigorous scanning (all severities + deployment gates)
+- **Purpose**: Secure, production-ready deployments
+- **Tools**: Trivy, Bandit, Safety, Semgrep, Snyk, Deployment Security Gate
+
+### Security Workflows
+- **Development**: `.github/workflows/security-scan.yml`
+- **Production**: `.github/workflows/security-scan-production.yml`
+- **Deployment Gate**: `.github/workflows/deployment-security-gate.yml`
+
 ## CI/CD Pipeline
 
 ### GitHub Actions Workflow

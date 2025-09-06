@@ -259,8 +259,33 @@ npx playwright test --ui
 
 ## Development Workflow
 
+### Branching Strategy
+
+TheTally uses a feature branch workflow with integrated security scanning:
+
+```
+main (production) ←─── develop (integration) ←─── feature/* (development)
+```
+
+#### Branch Types
+- **`main`**: Production-ready code, highly protected
+- **`develop`**: Integration branch for staging/testing  
+- **`feature/*`**: Development branches for new features
+- **`hotfix/*`**: Emergency fixes for production
+
+#### Security Integration
+- **Feature branches**: Light security scanning (HIGH severity only)
+- **Develop branch**: Medium security scanning (HIGH + MEDIUM severity)
+- **Main branch**: Rigorous security scanning (all severities + deployment gates)
+
+See [Branching Strategy](branching-strategy.md) for detailed workflow.
+
 ### 1. Feature Development
 ```bash
+# Start from develop branch
+git checkout develop
+git pull origin develop
+
 # Create feature branch
 git checkout -b feature/new-feature
 
@@ -277,6 +302,9 @@ git commit -m "feat: add new feature"
 
 # Push branch
 git push origin feature/new-feature
+
+# Create Pull Request to develop branch
+# Security scans will run automatically
 ```
 
 ### 2. Code Quality
