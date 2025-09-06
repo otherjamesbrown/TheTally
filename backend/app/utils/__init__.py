@@ -41,7 +41,7 @@ from backend.app.utils.security import SecurityUtils
 from backend.app.utils.logging import get_audit_logger
 
 # Security utilities
-hashed_password = hash_password("secure123")
+hashed_password = hash_password("example_password")
 is_valid = validate_email("user@example.com")
 token = generate_jwt_token(user_id="123", tenant_id="tenant_456")
 

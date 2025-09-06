@@ -65,7 +65,7 @@ DATABASE_HOST=your-cloud-sql-host
 DATABASE_PORT=5432
 DATABASE_NAME=thetally
 DATABASE_USER=thetally_user
-DATABASE_PASSWORD=secure_password
+DATABASE_PASSWORD=${DATABASE_PASSWORD:-secure_password}
 
 # Authentication
 JWT_SECRET_KEY=your-jwt-secret-key

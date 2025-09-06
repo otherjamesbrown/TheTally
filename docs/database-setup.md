@@ -110,7 +110,7 @@ DATABASE_HOST=your-instance-ip
 DATABASE_PORT=5432
 DATABASE_NAME=thetally_prod
 DATABASE_USER=thetally_user
-DATABASE_PASSWORD=your-secure-password
+DATABASE_PASSWORD=${DATABASE_PASSWORD:-your-secure-password}
 
 # Connection Pool
 DATABASE_POOL_SIZE=10

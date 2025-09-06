@@ -95,7 +95,7 @@ DATABASE_HOST=localhost
 DATABASE_PORT=5432
 DATABASE_NAME=thetally_dev
 DATABASE_USER=thetally_user
-DATABASE_PASSWORD=password
+DATABASE_PASSWORD=${DATABASE_PASSWORD:-password}
 
 # Logging
 LOKI_URL=http://localhost:3100
@@ -192,7 +192,7 @@ DATABASE_HOST=localhost
 DATABASE_PORT=5432
 DATABASE_NAME=thetally_local
 DATABASE_USER=thetally_user
-DATABASE_PASSWORD=password
+DATABASE_PASSWORD=${DATABASE_PASSWORD:-password}
 
 # Logging (using Docker services)
 LOKI_URL=http://localhost:3100

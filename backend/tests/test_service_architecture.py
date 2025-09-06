@@ -45,7 +45,7 @@ class TestSecurityUtils:
     
     def test_password_hashing(self):
         """Test password hashing functionality."""
-        password = "TestPassword123!"
+        password = "TestPassword123!"  # nosec B105
         hashed = SecurityUtils.hash_password(password)
         
         assert hashed != password
@@ -56,7 +56,7 @@ class TestSecurityUtils:
     def test_password_validation(self):
         """Test password strength validation."""
         # Valid password
-        valid_password = "TestPassword123!"
+        valid_password = "TestPassword123!"  # nosec B105
         SecurityUtils._validate_password_strength(valid_password)
         
         # Invalid passwords
@@ -271,7 +271,7 @@ class TestServiceArchitectureIntegration:
     def test_security_integration(self):
         """Test security utilities integration."""
         # Test password flow
-        password = "SecurePassword123!"
+        password = "SecurePassword123!"  # nosec B105
         hashed = SecurityUtils.hash_password(password)
         assert SecurityUtils.verify_password(password, hashed)
         

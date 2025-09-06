@@ -313,7 +313,7 @@ root_url = http://localhost:3000/
 
 [security]
 admin_user = admin
-admin_password = thetally_admin_123
+admin_password = ${GRAFANA_ADMIN_PASSWORD:-thetally_admin_123}
 
 [log]
 mode = console
@@ -368,7 +368,7 @@ services:
     volumes:
       - ./grafana/grafana.ini:/etc/grafana/grafana.ini
     environment:
-      - GF_SECURITY_ADMIN_PASSWORD=thetally_admin_123
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD:-thetally_admin_123}
     depends_on:
       - loki
       - prometheus
@@ -439,7 +439,7 @@ DATABASE_HOST=$DB_EXTERNAL_IP
 DATABASE_PORT=5432
 DATABASE_NAME=thetally
 DATABASE_USER=thetally_user
-DATABASE_PASSWORD=secure_password_123
+DATABASE_PASSWORD=${DATABASE_PASSWORD:-secure_password_123}
 
 # Authentication
 JWT_SECRET_KEY=<generated JWT secret>
