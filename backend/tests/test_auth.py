@@ -14,7 +14,7 @@ from unittest.mock import patch, MagicMock
 
 from app.main import app
 from app.models.user import User
-from app.schemas.auth import UserRegisterRequest, UserLoginRequest
+from app.schemas.auth import UserRegisterRequest, UserLoginRequest, TwoFactorSetupRequest, TwoFactorVerifyRequest
 from app.services.auth import AuthService
 from app.utils.security import SecurityUtils
 from app.db.session import get_db
@@ -129,7 +129,7 @@ class TestAuthService:
         """Test successful user registration."""
         user_data = UserRegisterRequest(
             email="test@example.com",
-            password="TestPass123!"  # nosec B105,  # nosec B105
+            password="TestPass123!"  # nosec B105
             first_name="Test",
             last_name="User"
         )
@@ -289,7 +289,7 @@ class TestAuthEndpoints:
         """Test successful user registration endpoint."""
         user_data = {
             "email": "test@example.com",
-            "password": "TestPass123!"  # nosec B105,
+            "password": "TestPass123!"  # nosec B105
             "first_name": "Test",
             "last_name": "User"
         }
