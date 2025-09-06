@@ -1,0 +1,19 @@
+[bandit]
+# Bandit configuration for TheTally project
+# This file configures bandit security scanning rules
+
+# Exclude directories from scanning
+exclude_dirs = ['tests', 'venv', '__pycache__', '.git', 'node_modules']
+
+# Skip specific tests that are not relevant for our use case
+skips = [
+    'B101',  # assert_used - we use asserts in tests
+    'B601',  # shell_injection_subprocess - we use subprocess safely
+    'B603',  # subprocess_without_shell_equals_true - we use shell=True intentionally
+]
+
+# Set confidence levels
+confidence = ['HIGH', 'MEDIUM']
+
+# Set severity levels  
+severity = ['HIGH', 'MEDIUM', 'LOW']

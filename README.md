@@ -128,7 +128,7 @@ See [AI Rules](docs/ai-rules.md) for development guidelines.
 - [x] Project setup and architecture
 - [x] Security configuration
 - [x] [Implement user registration and login API](https://github.com/otherjamesbrown/TheTally/issues/2) - JWTs and 2FA support ✅
-- [ ] [Dockerize frontend and backend applications](https://github.com/otherjamesbrown/TheTally/issues/5) - Containerization
+- [x] [Dockerize frontend and backend applications](https://github.com/otherjamesbrown/TheTally/issues/5) - Containerization ✅
 - [ ] [Create GitHub Actions CI/CD pipeline](https://github.com/otherjamesbrown/TheTally/issues/6) - Automated deployment
 - [ ] [Implement E2E tests for login flow](https://github.com/otherjamesbrown/TheTally/issues/7) - Quality assurance
 

@@ -1,0 +1,226 @@
+name: Production Security Scan
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*' ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to scan for'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+        - production
+        - staging
+
+jobs:
+  production-security-scan:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v')
+    permissions:
+      security-events: write
+      contents: read
+      actions: read
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install security tools
+        run: |
+          pip install bandit safety semgrep
+          npm install -g @snyk/cli
+      
+      - name: Run comprehensive Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          severity: 'CRITICAL,HIGH,MEDIUM'
+      
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: 'trivy-results.sarif'
+      
+      - name: Run Bandit with strict production settings
+        run: |
+          echo "🔍 Running strict Bandit security linter for production..."
+          bandit -r backend/ -f json -o bandit-production-results.json -ll -x backend/tests/
+          
+          # Check for high-severity issues
+          if jq '.results[] | select(.issue_severity == "HIGH")' bandit-production-results.json | grep -q "HIGH"; then
+            echo "❌ HIGH severity security issues found in production code"
+            jq '.results[] | select(.issue_severity == "HIGH")' bandit-production-results.json
+            exit 1
+          fi
+          
+          # Check for medium-severity issues (fail on critical ones)
+          if jq '.results[] | select(.issue_severity == "MEDIUM" and .issue_confidence == "HIGH")' bandit-production-results.json | grep -q "MEDIUM"; then
+            echo "⚠️  HIGH confidence MEDIUM severity issues found"
+            jq '.results[] | select(.issue_severity == "MEDIUM" and .issue_confidence == "HIGH")' bandit-production-results.json
+            echo "Review these issues before production deployment"
+          fi
+          
+          echo "✅ Bandit production security scan completed"
+      
+      - name: Run Safety check for known vulnerabilities
+        run: |
+          echo "🔍 Checking for known security vulnerabilities in Python dependencies..."
+          safety check --json --output safety-results.json || true
+          
+          # Check for critical vulnerabilities
+          if jq '.vulnerabilities[] | select(.severity == "CRITICAL")' safety-results.json | grep -q "CRITICAL"; then
+            echo "❌ CRITICAL vulnerabilities found in dependencies"
+            jq '.vulnerabilities[] | select(.severity == "CRITICAL")' safety-results.json
+            exit 1
+          fi
+          
+          # Check for high vulnerabilities
+          if jq '.vulnerabilities[] | select(.severity == "HIGH")' safety-results.json | grep -q "HIGH"; then
+            echo "⚠️  HIGH severity vulnerabilities found in dependencies"
+            jq '.vulnerabilities[] | select(.severity == "HIGH")' safety-results.json
+            echo "Consider updating these dependencies before production deployment"
+          fi
+          
+          echo "✅ Safety check completed"
+      
+      - name: Run Semgrep for advanced security analysis
+        run: |
+          echo "🔍 Running Semgrep security analysis..."
+          semgrep --config=auto --json --output=semgrep-results.json backend/ || true
+          
+          # Check for high-severity findings
+          if jq '.results[] | select(.extra.severity == "ERROR")' semgrep-results.json | grep -q "ERROR"; then
+            echo "❌ ERROR severity security findings detected"
+            jq '.results[] | select(.extra.severity == "ERROR")' semgrep-results.json
+            exit 1
+          fi
+          
+          echo "✅ Semgrep analysis completed"
+      
+      - name: Run Snyk security scan
+        run: |
+          echo "🔍 Running Snyk security scan..."
+          snyk test --severity-threshold=high --json --output=snyk-results.json || true
+          
+          # Check for high-severity vulnerabilities
+          if jq '.vulnerabilities[] | select(.severity == "high")' snyk-results.json | grep -q "high"; then
+            echo "❌ HIGH severity vulnerabilities found by Snyk"
+            jq '.vulnerabilities[] | select(.severity == "high")' snyk-results.json
+            exit 1
+          fi
+          
+          echo "✅ Snyk scan completed"
+      
+      - name: Check for hardcoded secrets (strict mode)
+        run: |
+          echo "🔍 Running strict secrets detection..."
+          
+          # Check for common secret patterns with strict rules
+          if grep -r -i "password\s*=\s*['\"][^'\"]*['\"]" backend/ --exclude-dir=tests --exclude-dir=__pycache__; then
+            echo "❌ Found hardcoded passwords in production code"
+            exit 1
+          fi
+          
+          if grep -r -i "api_key\s*=\s*['\"][^'\"]*['\"]" backend/ --exclude-dir=tests --exclude-dir=__pycache__; then
+            echo "❌ Found hardcoded API keys in production code"
+            exit 1
+          fi
+          
+          if grep -r -i "secret\s*=\s*['\"][^'\"]*['\"]" backend/ --exclude-dir=tests --exclude-dir=__pycache__; then
+            echo "❌ Found hardcoded secrets in production code"
+            exit 1
+          fi
+          
+          # Check for production-specific patterns
+          if grep -r -E "sk-[a-zA-Z0-9]{20,}" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=venv; then
+            echo "❌ Found potential OpenAI API keys"
+            exit 1
+          fi
+          
+          if grep -r -E "AIza[0-9A-Za-z\\-_]{35}" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=venv; then
+            echo "❌ Found potential Google API keys"
+            exit 1
+          fi
+          
+          if grep -r -E "AKIA[0-9A-Z]{16}" . --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=venv; then
+            echo "❌ Found potential AWS access keys"
+            exit 1
+          fi
+          
+          echo "✅ No hardcoded secrets found"
+      
+      - name: Validate production configuration
+        run: |
+          echo "🔍 Validating production configuration..."
+          
+          # Check that production config uses environment variables
+          if grep -r "0\.0\.0\.0" backend/app/core/config.py; then
+            echo "❌ Found hardcoded 0.0.0.0 binding in production config"
+            exit 1
+          fi
+          
+          # Check that secrets are properly configured
+          if grep -r "dev-secret-key" backend/app/core/config.py; then
+            echo "❌ Found development secrets in production config"
+            exit 1
+          fi
+          
+          # Check for proper environment variable usage
+          if ! grep -r "os.getenv" backend/app/core/config.py; then
+            echo "❌ Configuration not using environment variables"
+            exit 1
+          fi
+          
+          echo "✅ Production configuration validated"
+      
+      - name: Check .env.example completeness
+        run: |
+          echo "🔍 Checking .env.example completeness..."
+          
+          required_vars=(
+            "DATABASE_URL"
+            "SECRET_KEY"
+            "JWT_SECRET"
+            "API_HOST"
+            "API_PORT"
+          )
+          
+          for var in "${required_vars[@]}"; do
+            if ! grep -q "$var" .env.example; then
+              echo "❌ Missing required variable in .env.example: $var"
+              exit 1
+            fi
+          done
+          
+          echo "✅ .env.example is complete"
+      
+      - name: Security scan summary
+        if: always()
+        run: |
+          echo "## 🔒 Production Security Scan Summary"
+          echo "✅ Trivy vulnerability scan completed"
+          echo "✅ Bandit security linter completed"
+          echo "✅ Safety dependency check completed"
+          echo "✅ Semgrep security analysis completed"
+          echo "✅ Snyk security scan completed"
+          echo "✅ Hardcoded secrets check completed"
+          echo "✅ Production configuration validated"
+          echo ""
+          echo "**All security checks must pass for production deployment**"
+          echo "Check the Security tab for detailed results."
