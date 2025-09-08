@@ -15,8 +15,8 @@
 
 ## Phase 1: Core Functionality (MVP) 📊
 
-- [ ] [**Create database models for accounts and transactions**](https://github.com/otherjamesbrown/TheTally/issues/3) - Data models for financial accounts.
-- [ ] [**Implement core service layer**](https://github.com/otherjamesbrown/TheTally/issues/8) - Business logic services for user management, transaction processing, and categorization.
+- [x] [**Create database models for accounts and transactions**](https://github.com/otherjamesbrown/TheTally/issues/3) - Data models for financial accounts.
+- [x] [**Implement core service layer**](https://github.com/otherjamesbrown/TheTally/issues/8) - Business logic services for user management, transaction processing, and categorization.
 - [ ] [**Build file import component**](https://github.com/otherjamesbrown/TheTally/issues/9) - Frontend component for CSV, OFX, and QIF files.
 - [ ] [**Implement backend file parsing logic**](https://github.com/otherjamesbrown/TheTally/issues/10) - Backend logic to parse files and store transactions.
 - [ ] [**Develop rules-based categorization engine**](https://github.com/otherjamesbrown/TheTally/issues/11) - Auto-categorization system.
