@@ -81,11 +81,18 @@ This module is designed to be AI-friendly with:
 from .base import BaseModel
 from .user import User
 from .tenant import Tenant
+from .account import Account
+from .transaction import Transaction
+from .category import Category
+from .categorization_rule import CategorizationRule
 
 # Re-export commonly used models
 __all__ = [
     "BaseModel",
     "User",
     "Tenant",
-    # Add other model exports as they are implemented
+    "Account",
+    "Transaction",
+    "Category",
+    "CategorizationRule",
 ]

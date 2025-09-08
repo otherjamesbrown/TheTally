@@ -67,9 +67,20 @@ This module is designed to be AI-friendly with:
 
 # Import all service classes for easy access
 from .base import BaseService
+from .auth import AuthService
+from .user_service import UserService
+from .account_service import AccountService
+from .transaction_service import TransactionService
+from .category_service import CategoryService
+from .categorization_service import CategorizationService
 
 # Re-export commonly used services
 __all__ = [
     "BaseService",
-    # Add other service exports as they are implemented
+    "AuthService",
+    "UserService",
+    "AccountService",
+    "TransactionService",
+    "CategoryService",
+    "CategorizationService",
 ]
