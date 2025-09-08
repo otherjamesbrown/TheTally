@@ -41,8 +41,8 @@ jobs:
         uses: trufflesecurity/trufflehog@main
         with:
           path: ./
-          base: main
-          head: HEAD
+          base: ${{ github.event_name == 'schedule' && '' || 'main' }}
+          head: ${{ github.event_name == 'schedule' && '' || 'HEAD' }}
           extra_args: --debug --only-verified
       
       - name: Run Bandit security linter for Python (Development)
